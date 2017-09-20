@@ -8,7 +8,7 @@ module.exports = function(app) {
     .post(helicopter.createHelicopter);
 
 
-  app.route('/helicopters/:helicopterID')
+  app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
     .put(helicopter.updateHelicopter)
     .delete(helicopter.deleteHelicopter);
