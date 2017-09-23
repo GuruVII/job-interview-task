@@ -1,25 +1,21 @@
 import angular from 'angular';
-
+import 'material-design-lite/material.min.css';
+import 'material-design-lite';
 import '../style/app.scss';
 
+//this is a directive
 let app = () => {
   return {
     template: require('./app.html'),
-    controller: 'AppCtrl',
+    controller: require('./controllers/appController'),
     controllerAs: 'app'
   }
 };
 
-class AppCtrl {
-  constructor() {
-    this.url = 'https://github.com/preboot/angular-webpack';
-  }
-}
 
-const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [])
+
+angular.module('app', [])
   .directive('app', app)
   .controller('AppCtrl', AppCtrl);
 
-export default MODULE_NAME;
