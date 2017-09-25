@@ -17,4 +17,3 @@ module.exports = new WebpackConfig().extend('./webpack.config.common.babel.js').
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ]
 });
-

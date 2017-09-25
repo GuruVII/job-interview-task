@@ -1,9 +1,11 @@
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-  mongoose = require('mongoose'),
-  Helicopter = require('./api/models/helicopterModel')
-  bodyParser = require('body-parser');
+const cors = require('cors');
+const express = require('express');
+const  app = express();
+const  port = process.env.PORT || 3000;
+const  mongoose = require('mongoose');
+const  Helicopter = require('./api/models/helicopterModel');
+const  bodyParser = require('body-parser');
+
   
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
@@ -12,22 +14,18 @@ mongoose.connect('mongodb://localhost/helicopters');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 
 //importing route
-var routes = require('./api/routes/helicopterRoutes');
+const routes = require('./api/routes/helicopterRoutes');
 routes(app); //register the route
 
 
 app.listen(port);
 
-app.use(function(req, res, next) {
+app.use(function(req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
 });
 
 console.log('helicopter list RESTful API server started on: ' + port);

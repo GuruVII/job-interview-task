@@ -20,6 +20,9 @@ module.exports = new WebpackConfig().merge({
       }
     ],
     loaders: [{
+        test: /\.css$/,
+        loader: 'style!css?sourceMap&sourceComments'
+    }, {
         test: /\.scss$/,
         loader: 'style!css?sourceMap!sass?sourceMap&sourceComments'
     }, {
