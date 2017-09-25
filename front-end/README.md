@@ -1,89 +1,49 @@
-# angularjs-webpack
 
-[![Dependency Status](https://david-dm.org/preboot/angularjs-webpack/status.svg)](https://david-dm.org/preboot/angular-webpack#info=dependencies) [![devDependency Status](https://david-dm.org/preboot/angularjs-webpack/dev-status.svg)](https://david-dm.org/preboot/angularjs-webpack#info=devDependencies)
+[![NPM version](https://badge.fury.io/js/angular-es6-webpack-starter.svg)](http://badge.fury.io/js/angular-es6-webpack-starter)
+[![GitHub version](https://badge.fury.io/gh/KarlDoyle%2Fangular-es6-webpack-starter.svg)](http://badge.fury.io/gh/KarlDoyle%2Fangular-es6-webpack-starter)
+[![Build Status](https://travis-ci.org/KarlDoyle/angular-es6-webpack-starter.svg?branch=master)](https://travis-ci.org/KarlDoyle/angular-es6-webpack-starter)
+[![Dependency Status](https://david-dm.org/KarlDoyle/angular-es6-webpack-starter.svg)](https://david-dm.org/KarlDoyle/angular-es6-webpack-starter)
+[![devDependency Status](https://david-dm.org/KarlDoyle/angular-es6-webpack-starter/dev-status.svg)](https://david-dm.org/KarlDoyle/angular-es6-webpack-starter#info=devDependencies)
 
-A complete, yet simple, starter for AngularJS using Webpack.
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](http://stackshare.io/KarlDoyle/angular-1-starter-kit)
 
-This workflow serves as a starting point for building AngularJS (1.x) applications using Webpack 2.x. Should be noted that apart from the pre-installed angular package, this workflow is pretty much generic.
+![Angular, ES6 and Webpack Starter](http://i.imgur.com/U6ueigg.jpg)
 
-* Heavily commented webpack configuration with reasonable defaults.
-* ES6, and ES7 support with babel.
-* Source maps included in all builds.
-* Development server with live reload.
-* Production builds with cache busting.
-* Testing environment using karma to run tests and jasmine as the framework.
-* Code coverage when tests are run.
-* No gulp and no grunt, just npm scripts.
+angular-es6-webpack-starter
+=============================
 
->Warning: Make sure you're using the latest version of Node.js and NPM
+An Angular 1 Starter kit featuring Angular 1, ES6, Webpack, UI-Router, SCSS, HMR, Protractor and multi environments.
 
-### Quick start
+This seed repo serves as an Angular 1 starter for anyone looking to get up and running with Angular 1 and ES6 fast. Using Webpack for building our files and assisting with boilerplate. We're also using Protractor for our end-to-end tests.
 
-> Clone/Download the repo then edit `app.js` inside [`/src/app/app.js`](/src/app/app.js)
+- Best practices in file and application organization for Angular 1.
+- Ready to go build system using Webpack for working with ES6.
+- Examples that are ready to go when experimenting with Angular 1 and Components.
+- A great Angular 1 seed repo for anyone who wants to start their project.
+- End-to-end Angular 1 code using Protractor.
+- Hot Module Replacement with Webpack
+- Multi Environment configuration with Webpack
+- Linting uses ESlint to provide best practices for Angular 1 and ES6
 
-```bash
+##### Quick start
+
+Make sure you have Node version >= 6.0 and NPM >= 3
+
+```
 # clone our repo
-$ git clone https://github.com/preboot/angularjs-webpack.git my-app
+# --depth 1 removes all but one .git commit history
+git clone --depth 1 https://github.com/KarlDoyle/angular-es6-webpack-starter.git
 
-# change directory to your app
-$ cd my-app
+# change directory to repo
+cd angular-es6-webpack-starter
 
-# install the dependencies with npm
-$ npm install
+# install the repo with npm
+npm install
 
 # start the server
-$ npm start
-```
-
-go to [http://localhost:8080](http://localhost:8080) in your browser.
-
-# Table of Contents
-
-* [Getting Started](#getting-started)
-    * [Dependencies](#dependencies)
-    * [Installing](#installing)
-    * [Running the app](#running-the-app)
-    * [Developing](#developing)
-    * [Testing](#testing)
-* [License](#license)
-
-# Getting Started
-
-## Dependencies
-
-What you need to run this app:
-* `node` and `npm` (Use [NVM](https://github.com/creationix/nvm))
-* Ensure you're running Node (`v4.1.x`+) and NPM (`2.14.x`+)
-
-## Installing
-
-* `fork` this repo
-* `clone` your fork
-* `npm install` to install all dependencies
-
-## Running the app
-
-After you have installed all dependencies you can now run the app with:
-```bash
 npm start
+
 ```
 
-It will start a local server using `webpack-dev-server` which will watch, build (in-memory), and reload for you. The port will be displayed to you as `http://localhost:8080`.
+go to [http://0.0.0.0:9000](http://0.0.0.0:9000) or [http://localhost:9000](http://localhost:9000) in your browser
 
-## Developing
-
-### Build files
-
-* single run: `npm run build`
-* build files and watch: `npm start`
-
-## Testing
-
-#### 1. Unit Tests
-
-* single run: `npm test`
-* live mode (TDD style): `npm run test-watch`
-
-# License
-
-[MIT](/LICENSE)

@@ -21,8 +21,13 @@ routes(app); //register the route
 
 app.listen(port);
 
-app.use(function(req, res) {
-  res.status(404).send({url: req.originalUrl + ' not found'})
+app.use(function(req, res, next) {
+    res.status(404).send({url: req.originalUrl + ' not found'})
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
 });
 
 console.log('helicopter list RESTful API server started on: ' + port);
