@@ -1,4 +1,4 @@
-function exampleService($http) {
+function helicopterDetailedService($http) {
   return {
     title: () => { return 'test'},
     helicopter: () => {
@@ -7,4 +7,4 @@ function exampleService($http) {
   }
 }
 /* @ngInject */
-export default exampleService;
+export default helicopterDetailedService;

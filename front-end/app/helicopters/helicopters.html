@@ -1,16 +1,17 @@
 
-<h1>{{example.title}}</h1>
+<h1>{{helicopters.title}}</h1>
 
-<div class="demo-card-wide mdl-card mdl-shadow--2dp" ng-repeat="item in example.helicopter">
+<div class="demo-card-wide mdl-card mdl-shadow--2dp" ng-repeat="item in helicopters.helicopter">
   <div class="mdl-card__title">
     <h2 class="mdl-card__title-text blue">{{item.name}}</h2>
   </div>
   <div class="mdl-card__supporting-text">
+  	ID: {{item._id}}<br>
     Max Speed: {{item.maxSpeed}}
   </div>
   <div class="mdl-card__actions mdl-card--border">
-    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      Get Started
+    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="helicopterDetailed({ id: item._id })">
+      Details
     </a>
   </div>
   <div class="mdl-card__menu">
