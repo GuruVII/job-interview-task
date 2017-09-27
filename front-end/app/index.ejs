@@ -10,6 +10,24 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
-    <div id="app-wrapper" ui-view></div>
+  
+  <header class="mdl-layout__header header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <img src="assets/logo.svg" class="logo">
+      <span class="mdl-layout-title">Zrakomlat d.o.o.</span>
+      <revenue></revenue>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav>
+    </div>
+  </header>
+  <ui-view></ui-view>   
   </body>
 </html>

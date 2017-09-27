@@ -47,9 +47,10 @@ module.exports = new WebpackConfig().merge({
       dry: false
     }),
     new HtmlWebpackPlugin({
-      title: 'Starter Theme',
+      title: 'Job interview task',
       template: 'index.ejs',
       inject: 'body'
-    })
+    }),
+    new CopyWebpackPlugin([{from: './assets', to: './assets'}], { copyUnmodified: true})
   ]
 })
