@@ -3,19 +3,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-/*let getRevenue function(){
-  let result = 0;
-  let tempResult = [];
-  this.history.forEach((currentValue) => {
-    //split string with all the data and add the first entry (the revenue value) as a result
-    tempResult = currentValue.split("//");
-    result += tempResult[0]
-    console.log(result);
-    return result
-  })
-}*/
 
-var HelicoperSchema = new Schema({
+
+var HelicopterSchema = new Schema({
   name: {
     type: String,
     required: 'Kindly enter the name of helicopter'
@@ -33,9 +23,20 @@ var HelicoperSchema = new Schema({
     required: 'Kindly enter the top speed of the helicopter'
   },
   history: [],
-  /*totalRevenue: {
-    type
-  }  */  
 });
 
-module.exports = mongoose.model('Helicopters', HelicoperSchema);
+/*HelicopterSchema.methods.totalRevenue = function(){
+  console.log("test")
+  let result = 0;
+  let tempResult = [];
+  this.history.forEach(function(currentValue) {
+    //split string with all the data and add the first entry (the revenue value) as a result
+    tempResult = parseInt(currentValue[0], 10);
+    result += tempResult
+    console.log(result);
+    return result
+  })
+  return result
+}*/
+
+module.exports = mongoose.model('Helicopters', HelicopterSchema);

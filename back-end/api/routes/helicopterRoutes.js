@@ -7,6 +7,8 @@ module.exports = function(app) {
     .get(helicopter.listAllHelicopters)
     .post(helicopter.createHelicopter);
 
+  app.route('/helicopters/revenue')
+    .get(helicopter.totalRevenue)
 
   app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
