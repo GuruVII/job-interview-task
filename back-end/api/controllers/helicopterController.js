@@ -31,8 +31,11 @@ exports.readHelicopter = function(req, res) {
 };
 
 
-exports.updateHelicopter = function(req, res) {
-  helicopter.findOneAndUpdate({_id: req.params.helicopterId}, req.body, {new: true}, function(err, helicopter) {
+exports.updateHelicopterHistory = function(req, res) {
+  //the input is changed into an array, and the string is transformed into integers
+  let item = req.body.history.split("//")
+  //this pushes the new value on top of the existing one
+  helicopter.findOneAndUpdate({_id: req.params.helicopterId}, {$push: {history: item}}, {new: true}, function(err, helicopter) {
     if (err)
       res.send(err);
     res.json(helicopter);

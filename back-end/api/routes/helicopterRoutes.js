@@ -10,6 +10,6 @@ module.exports = function(app) {
 
   app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
-    .put(helicopter.updateHelicopter)
+    .put(helicopter.updateHelicopterHistory)
     .delete(helicopter.deleteHelicopter);
 };
