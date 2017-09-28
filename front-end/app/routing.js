@@ -1,13 +1,13 @@
 function Routes($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.when('', '/index');
-  $urlRouterProvider.when('/', '/index');
+  $urlRouterProvider.when('/index', '/');
+  $urlRouterProvider.when('', '/');
   $urlRouterProvider.otherwise('/error');
   $stateProvider.state('error', {
     url: '/error',
     template: '<h2>Error 404</h2>'
   });
   $stateProvider.state('helicopters', {
-    url: '/index',
+    url: '/',
     component: 'helicopters'
   });
   $stateProvider.state('helicopterDetailed', {

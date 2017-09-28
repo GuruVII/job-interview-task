@@ -1,8 +1,8 @@
 import angular from 'angular';
 import component from './helicopterDetailed.component';
-//import service from './helicopterDetailed.service';
+import service from './helicopterDetailed.service';
 /* @ngInject */
 angular
   .module('helicopterDetailed', [])
   .component('helicopterDetailed', component)
-  //.factory('helicopterDetailed', service)
+  .factory('helicopterDetailedService', service)

@@ -2,7 +2,7 @@
 module.exports = function(app) {
   var helicopter = require('../controllers/helicopterController');
 
-  // todoList Routes
+  // helciopter Routes
   app.route('/helicopters')
     .get(helicopter.listAllHelicopters)
     .post(helicopter.createHelicopter);

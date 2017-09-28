@@ -1,0 +1,20 @@
+@mixin flex-box($flex-flow) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: $flex-flow;
+    flex-flow: $flex-flow;
+}
+@mixin justify-content($position) {
+    -webkit-justify-content: $position;
+    justify-content: $position;
+}
+@mixin align-items($position) {
+    -webkit-align-items: $position;
+    align-items: $position;
+}
+@mixin align-self($position) {
+    -webkit-align-self: $position;
+    align-self: $position;
+}

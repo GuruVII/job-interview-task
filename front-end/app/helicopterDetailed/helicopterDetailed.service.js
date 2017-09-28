@@ -1,8 +1,7 @@
 function helicopterDetailedService($http) {
   return {
-    title: () => { return 'test'},
-    helicopter: () => {
-      return $http.get('http://localhost:3000/helicopters')
+    helicopter: (id) => {
+      return $http.get(`http://localhost:3000/helicopters/${id}`)
     }
   }
 }

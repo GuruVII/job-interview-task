@@ -3,9 +3,18 @@ import helicopterDetailedHtml from './helicopterDetailed.html';
 let helicopterDetailedComponent = {
   template: helicopterDetailedHtml,
   controllerAs: 'helicopterDetailed',
-  controller: function($stateParams) {
+  controller: function($stateParams, helicopterDetailedService) {
     const vm = this;
-    this.helicopter = $stateParams.id;
+    vm.id = $stateParams.id;
+    console.log(vm.id)
+    vm.data = {};
+    helicopterDetailedService.helicopter(vm.id).then(function(response) {
+          vm.data = response.data;      
+          //First function handles success
+    }, function(response) {
+             //Second function handles error
+      vm.helicopter = 'An error has occured';
+    });
   }
 
 }
