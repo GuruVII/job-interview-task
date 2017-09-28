@@ -6,10 +6,9 @@ let helicopterDetailedComponent = {
   controller: function($stateParams, helicopterDetailedService) {
     const vm = this;
     vm.id = $stateParams.id;
-    console.log(vm.id)
     vm.data = {};
     helicopterDetailedService.helicopter(vm.id).then(function(response) {
-          vm.data = response.data;      
+      vm.data = response.data;
           //First function handles success
     }, function(response) {
              //Second function handles error

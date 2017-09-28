@@ -22,9 +22,9 @@ body {
 }
 
 //HELICOPTER LIST BODY
-.page-title{
-    width: 80%;
-    margin: 50px auto 0 auto;
+.page-title-main{
+    font-size: 3.4em;
+    margin: 50px 10px 0 10px;
     @media (max-width: 600px) {
         margin-left: 5px;
     }
@@ -32,13 +32,26 @@ body {
 .wrapper {
     @include flex-box(row wrap);
     //some browsers do not support space-evenly
-    @include justify-content(space-between);
-    @include justify-content(space-evenly);
+    @include justify-content(flex-start);
     @media(min-width: 600px) {
         width: 80%;
         margin: 50px auto 0 auto;
     }
+    @media(max-width: 950px) {
+        @include justify-content(center);
+    }
 }
+.sub-wrapper {
+    @include flex-box(row wrap);
+    //some browsers do not support space-evenly
+    @include justify-content(space-evenly);
+    @include justify-content(space-between);
+    width: 100%;
+    @media(max-width: 950px){
+        @include justify-content(center);
+    }
+}
+
 .mdl-card {
     width: 360px;
     margin: 10px 10px 25px 10px;
@@ -51,15 +64,56 @@ body {
         padding: 0px;
         background-size: contain;
         .mdl-card__title-text {
-            color: #e6e6e6;
-            background-color: black;
+            color: white;
+            background-color: $primary-color;
             padding: 5px;
             font-weight: 400;
         }
     }
     .mdl-card__supporting-text {
-        p {
+        h5 {
             margin-bottom: 2px;
+            margin-top: 10px;
         }
     }
+}
+
+//HELICOPTER DETAILS
+
+.wrapper-helicopter-details {
+    @include flex-box(row wrap);
+    //some browsers do not support space-evenly
+    @include justify-content(center);
+    @include align-items(center);
+    @media(min-width: 600px) {
+        width: 80%;
+        margin: 50px auto 0 auto;
+    }
+    .mdl-card{
+        &.mdl-card-detailed {
+            width: 750px;
+            @media(max-width: 950px){
+                width: 500px;
+            }
+            @media(max-width: 520px){
+                width: 310px;
+            }
+
+            .mdl-card__title {
+                background-size: contain;
+                height: 450px;
+                @media(max-width: 950px){
+                    height: 300px;
+                }
+                @media(max-width: 520px){
+                    height: 216px;
+                }
+            }
+            .mdl-card__actions {
+                padding-left: 16px;
+            }
+        }
+    }
+    
+
 }

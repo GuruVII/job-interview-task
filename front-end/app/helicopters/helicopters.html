@@ -1,21 +1,22 @@
-
-<h1 class="page-title">Seznam Helikopterjev</h1>
 <div class="wrapper">
-  <div class="card-square mdl-card mdl-shadow--2dp"  ng-repeat="item in helicopters.helicopter">
-    <div class="mdl-card__title mdl-card--expand" ng-style="{'background-image':'url(./assets/{{item.picture}}Small.jpg'}">
-      <span class="mdl-card__title-text">{{item.name}}</span>
+    <div><h1 class="page-title-main">Seznam Helikopterjev</h1></div>
+    <div class="sub-wrapper">
+        <div class="card-square mdl-card mdl-shadow--2dp"  ng-repeat="item in helicopters.helicopter">
+        <div class="mdl-card__title mdl-card--expand" ng-style="{'background-image':'url(./assets/{{item.picture}}Small.jpg'}">
+            <span class="mdl-card__title-text">{{item.name}}</span>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <p>Maximum Speed: {{item.maxSpeed}} km/h</p>
+            <p>Maximum number of passangers: {{item.maxPassangers}} people</p>
+            <p>Payload: {{item.lift}} metric tons</p>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="helicopterDetailed({ id: item._id })">
+            Details
+            </a>
+        </div>
     </div>
-    <div class="mdl-card__supporting-text">
-        <p>Maximum Speed: {{item.maxSpeed}} km/h</p>
-        <p>Maximum number of passangers: {{item.maxPassangers}} people</p>
-        <p>Payload: {{item.lift}} metric tons</p>
     </div>
-    <div class="mdl-card__actions mdl-card--border">
-      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="helicopterDetailed({ id: item._id })">
-        Details
-      </a>
-    </div>
-  </div>
 </div>
 
 

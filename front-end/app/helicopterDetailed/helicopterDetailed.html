@@ -1,7 +1,23 @@
 
-<h1 class="page-title">{{helicopterDetailed.data.name}}</h1>
-<div class="wrapper">
-	
+
+<div class="wrapper-helicopter-details">
+    <div class="mdl-card mdl-card-detailed mdl-shadow--2dp" ng-if="helicopterDetailed.data != {}">
+        <div class="mdl-card__title" style="background-image:url('./assets/{{helicopterDetailed.data.picture}}.jpg')">
+            <span class="mdl-card__title-text">{{helicopterDetailed.data.name}}</span>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <h5>Maximum Speed: {{helicopterDetailed.data.maxSpeed}} km/h</h5>
+            <h5>Maximum number of passangers: {{helicopterDetailed.data.maxPassangers}} people</h5>
+            <h5>Payload: {{helicopterDetailed.data.lift}} metric tons</h5>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <h4>Usage History</h4>
+            <p ng-if="helicopterDetailed.data.history.length == 0">Helicopter is yet to be rented</p>
+            <ol>
+                <li class="order history" ng-repeat="order in helicopterDetailed.data.history">Flight Revenue: {{order[0]}}€ Date: {{order[1] * 1000 | date:'yyyy-MM-dd HH:mm:ss'}} <span ng-if="order[2] != -1">Duration: {{order[2]}}s</span><span ng-if="order[2] == -1">Duration: Canceled</span></li>
+            </ol>
+        </div>
+    </div>
 </div>
 
 
