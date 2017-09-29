@@ -8,8 +8,13 @@ body {
 
 //HEADER
 .header {
+    overflow:hidden;
     &.mdl-layout__header {
      background-color: $primary-color;
+    }
+    .mdl-button {
+        color: white;
+        line-height: 36px;
     }
 }
 
@@ -63,6 +68,8 @@ body {
         height: 216px;
         padding: 0px;
         background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center; 
         .mdl-card__title-text {
             color: white;
             background-color: $primary-color;
@@ -118,6 +125,19 @@ body {
                         margin-right: 25px
                     }
                 }
+            }
+            .wrapper-detailed {
+                @include flex-box(row wrap);
+                @include justify-content(flex-start);
+                @include justify-content(space-between);
+                @include align-items(flex-end);
+                h4 {
+                    margin: 0px;
+                }
+            }
+            .mdl-button {
+                background-color: $primary-color;
+                color: white;
             }
         }
     }

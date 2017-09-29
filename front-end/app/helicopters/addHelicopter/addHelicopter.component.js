@@ -9,16 +9,25 @@ let addHelicopterComponent = {
     [['Flying', 'Hovering', 'Speeding', 'Fast', 'Reliable', 'Zrakomlat', 'Indepedant', 'Voyager', 'Enteprise', 'Defiant', 'Rogue', 'Black', 'Big'],
     ['eagle', 'hawk', 'helicopter', 'osprey', 'sparrow', 'bird', 'dog', 'ostrich', 'Berliner', 'potato', 'monkey']];
     vm.picture =  ['BellHelicopter', 'BellHelicopter430', 'Eurocopter1', 'Eurocopter2', 'Sikorsky'];
+    vm.addNewHelicopter = addNewHelicopter;
+    ///////
 
-    vm.addNewHelicopter = function() {
+    function createRandomInformation(from, to) {
+      return Math.floor((Math.random() * to) + from);
+    }
+    function selectedRandomValueInArray(array) {
+      let tempArray = [ ...array ]
+      return Math.floor(Math.random() * (tempArray.length - 1))
+    }
+    function addNewHelicopter() {
       //creates semi-random helicopter data
-      let name = this.nameSelectionArray[0][Math.floor(Math.random() * (this.nameSelectionArray[0].length - 1))] +
-      ' ' + this.nameSelectionArray[1][Math.floor(Math.random() * (this.nameSelectionArray[1].length - 1))] +
+      let name = vm.nameSelectionArray[0][selectedRandomValueInArray(vm.nameSelectionArray[0])] +
+      ' ' + vm.nameSelectionArray[1][selectedRandomValueInArray(vm.nameSelectionArray[1])] +
       ' ' + Math.floor((Math.random() * 25) + 1);
-      let maxSpeed = Math.floor((Math.random() * 320) + 150);
-      let lift = Math.floor((Math.random() * 50) + 1);
-      let maxPassangers = Math.floor((Math.random() * 25) + 1);
-      let picture = this.picture[Math.floor(Math.random() * (this.picture.length - 1))]
+      let maxSpeed = createRandomInformation(150, 350)
+      let lift = createRandomInformation(1, 50)
+      let maxPassangers = createRandomInformation(1, 25)
+      let picture = vm.picture[selectedRandomValueInArray(vm.picture)]
       let data = {name, lift, maxPassangers, maxSpeed, picture}
 
       addHelicopterService.addHelicopter(data).then(function successCallback(response) {
