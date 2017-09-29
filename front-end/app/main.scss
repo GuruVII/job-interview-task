@@ -111,6 +111,13 @@ body {
             }
             .mdl-card__actions {
                 padding-left: 16px;
+                .order-history {
+                   @include flex-box(row wrap);
+                   @include justify-content(flex-start);
+                   .order-details{
+                        margin-right: 25px
+                    }
+                }
             }
         }
     }

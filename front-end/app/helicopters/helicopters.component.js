@@ -3,17 +3,19 @@ import helicoptersHtml from './helicopters.html';
 let helicoptersComponent = {
   template: helicoptersHtml,
   controllerAs: 'helicopters',
-  controller: function(helicoptersService) {
+  controller: function(helicoptersService, $rootScope) {
     const vm = this;
     vm.helicopter = [];
-    helicoptersService.helicopter().then(function(response) {
+    $rootScope.getHelicopters = () => {
+      helicoptersService.helicopter().then(function(response) {
           //First function handles success
-      vm.helicopter = [ ...response.data ];
-
-    }, function(response) {
+        vm.helicopter = [ ...response.data ];
+      }, function(response) {
              //Second function handles error
-      vm.helicopter = 'An error has occured';
-    });
+        vm.helicopter = 'An error has occured';
+      });
+    }
+    $rootScope.getHelicopters()
   }
 
 }

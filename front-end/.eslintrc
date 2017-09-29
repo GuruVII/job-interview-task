@@ -26,7 +26,6 @@
     "angular/di-unused": 1,
     "angular/directive-restrict": 1,
     "angular/empty-controller": 1,
-    "angular/no-controller": 1,
     "angular/no-inline-template": 1,
     "angular/no-run-logic": 1,
     "angular/no-services": 1,
@@ -34,7 +33,6 @@
     "angular/no-directive-replace": 1,
     "angular/on-watch": 1,
     "angular/no-http-callback": 1,
-    "angular/controller-name": 2,
     "angular/directive-name": [2,"ci"],
     "angular/di": 2,
     "angular/di-order": 2,
@@ -46,7 +44,6 @@
     "angular/window-service": 2,
     "angular/timeout-service": 2,
     "angular/no-jquery-angularelement": 2,
-    "angular/log": 2,
     "angular/json-functions": 2,
     "angular/interval-service": 2,
     "angular/foreach": 2,
@@ -75,7 +72,6 @@
       }
     ],
     "no-use-before-define": 0,
-    "new-cap": 2,
     "no-caller": 2,
     "no-empty": 2,
     "no-irregular-whitespace": 2,
@@ -106,7 +102,7 @@
     ],
     "max-len": [
       2,
-      100
+      200
     ],
     "semi": 0,
     "no-cond-assign": 0,
