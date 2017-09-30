@@ -8,10 +8,13 @@ module.exports = function(app) {
     .post(helicopter.createHelicopter);
 
   app.route('/helicopters/revenue')
-    .get(helicopter.totalRevenue)
+    .get(helicopter.totalRevenue);
 
   app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
     .put(helicopter.updateHelicopterHistory)
     .delete(helicopter.deleteHelicopter);
+
+  app.route('/helicopterCancel/:helicopterId')
+      .put(helicopter.cancelHelicopter);
 };

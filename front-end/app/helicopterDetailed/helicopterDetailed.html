@@ -14,11 +14,13 @@
             <h4>Usage History</h4>
             <p ng-if="helicopterDetailed.data.history.length == 0">Helicopter is yet to be rented</p>
             <ol>
-                <li class="order-history" ng-repeat="order in helicopterDetailed.data.history">
+                <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index">
+                    <!--order[0] = revenue, order[1] unix time in seconds, order[2] = duration -->
                 	<span class="order-details">Revenue: {{order[0]}}€</span> 
                 	<span class="order-details">Date: {{order[1] * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
                 	<span ng-if="order[2] != -1" class="order-details">Duration: {{order[2]}}s</span>
                 	<span ng-if="order[2] == -1" class="order-details">Duration: Canceled</span>
+                    <button class="mdl-button" ng-click="helicopterDetailed.cancelHelicopter($index)">Cancel</button>
                 </li>
             </ol>
             <div class="wrapper-detailed">

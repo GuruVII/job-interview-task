@@ -41,6 +41,13 @@ exports.readHelicopter = function(req, res) {
   });
 };
 
+exports.cancelHelicopter = function(req, res) {
+  helicopter.findOneAndUpdate({_id: req.params.helicopterId}, req.body, {new: true}, function(err, helicopter) {
+    if (err)
+      res.send(err);
+    res.json(helicopter);
+  });
+};
 
 exports.updateHelicopterHistory = function(req, res) {
   //the input is changed into an array, and the string is transformed into integers
