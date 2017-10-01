@@ -39,6 +39,7 @@ body {
     //some browsers do not support space-evenly
     @include justify-content(flex-start);
     @media(min-width: 600px) {
+        max-width: 1536px;
         width: 80%;
         margin: 50px auto 0 auto;
     }
@@ -85,6 +86,15 @@ body {
     }
 }
 
+.position-card {
+    width: 360px;
+    margin: 10px 10px 25px 10px;
+    height: 1px;
+    @media (max-width: 600px) {
+        width: 310px;
+        margin: 15px 5px 10px 5px;
+    }
+}
 //HELICOPTER DETAILS
 
 .wrapper-helicopter-details {
@@ -94,6 +104,7 @@ body {
     @include align-items(center);
     @media(min-width: 600px) {
         width: 80%;
+        max-width: 1536px;
         margin: 50px auto 0 auto;
     }
     .mdl-card{
