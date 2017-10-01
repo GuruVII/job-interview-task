@@ -8,7 +8,14 @@ let helicopterDetailedComponent = {
     vm.id = $stateParams.id;
     vm.totalRevenue = 0;
     vm.data = {};
+    vm.rentTime;
+    vm.name;
     vm.cancelHelicopter = cancelHelicopter;
+    vm.getEstimate = getEstimate;
+
+    function getEstimate() {
+      console.log('test')
+    }
 
     function cancelHelicopter(index) {
       //sets the revenue from flight to 500, and sets status to -1, which the browser transforms into canceled
