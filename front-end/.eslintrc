@@ -47,7 +47,6 @@
     "angular/json-functions": 2,
     "angular/interval-service": 2,
     "angular/foreach": 2,
-    "angular/document-service": 2,
     "angular/definedundefined": 2,
     "no-bitwise": 2,
     "camelcase": [

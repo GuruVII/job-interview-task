@@ -25,29 +25,51 @@
             </ol>
             <div class="wrapper-detailed">
                 <h4>Total Revenue: <br> {{helicopterDetailed.totalRevenue}}€</h4>
-                <a class="mdl-button mdl-js-button">Rent Helicopter</a>
+                <a class="mdl-button mdl-js-button" ng-click="helicopterDetailed.getEstimateForm = true">Rent Helicopter</a>
             </div>
         </div>
     </div>
-    <div class="rent-helicopter-background">
-        <div class="rentHelicopterCard">
-            <div class="mdl-card">
-                <div class="mdl-card__supporting-text">
-                <h5>Rent helicopter</h5>
+    <div class="rent-helicopter-background" ng-if="helicopterDetailed.getEstimateForm" ng-click="helicopterDetailed.stopRentingProcess()">
+        <div class="rentHelicopterCard" ng-click="helicopterDetailed.childClick($event)">
+            <div class="mdl-card" ng-if="helicopterDetailed.estimate.total === 0">
+                    <div class="mdl-card__supporting-text">
+                        <div class="card-top">
+                            <h5>Rent helicopter</h5>
+                            <i class="material-icons" ng-click="helicopterDetailed.getEstimateForm = false">close</i>
+                        </div>
                 <form action="#" name="rentHelicopter">
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="text" id="name" name="name" ng-model="name" required>
-                        <label class="mdl-textfield__label" for="name">Please insert your name/company name</label>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="name" name="name" ng-model="helicopterDetailed.name" required>
+                        <label class="mdl-textfield__label" for="name" ng-show="!helicopterDetailed.name.length">Please insert name/company name</label>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="text" id="rentTime" name="rentTime" ng-model="rentTime" pattern="-?[0-9]*(\.[0-9]+)?" required>
-                        <label class="mdl-textfield__label" for="rentTime">Please insert rent duration (in secods)</label>
-                        <span class="mdl-textfield__error" ng-show="rentHelicopter.rentTime.$touched && rentHelicopter.rentTime.$dirty">Input is not a number!</span>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="rentTime" name="rentTime" ng-keyup="helicopterDetailed.checkIfEmpty()" ng-model="helicopterDetailed.rentTime" pattern="^[\d]*$" required>
+                        <label class="mdl-textfield__label" for="rentTime" ng-show="helicopterDetailed.isEmpty">Please insert rent duration (in secods)</label>
+                        <span class="mdl-textfield__error" ng-show="rentHelicopter.rentTime.$touched && rentHelicopter.rentTime.$dirty && rentHelicopter.rentTime.$invalid">Input is not a whole number!</span>
+
                     </div>
                 </form>
                      <button class="mdl-button mdl-js-button mdl-button--raised" ng-disabled="rentHelicopter.$invalid" ng-click="helicopterDetailed.getEstimate()">
                         Get Estimate
                     </button>
+                </div>
+            </div>
+            <div class="mdl-card" ng-if="helicopterDetailed.estimate.total > 0">
+                <div class="mdl-card__supporting-text">
+                    <div class="card-top">
+                        <h5>Estimates:</h5>
+                        <i class="material-icons" ng-click="helicopterDetailed.getEstimateForm = false">close</i>
+                    </div>
+                    <div class="card-middle">
+                            <h5>ESTIMATED TIME: {{helicopterDetailed.rentTime}} Seconds</h5>
+                            <h5>ESTIMATED COST: {{helicopterDetailed.estimate.total}}€</h5>
+                        <button class="mdl-button rent-btn mdl-js-button mdl-button--raised" ng-click="helicopterDetailed.rentHelicopter()">
+                            Rent Helicopter
+                        </button>
+                        <button class="mdl-button rent-btn mdl-js-button mdl-button--raised" ng-click="helicopterDetailed.stopRentingProcess()">
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

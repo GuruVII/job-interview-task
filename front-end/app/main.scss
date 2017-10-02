@@ -155,8 +155,8 @@ body {
     }
     .rent-helicopter-background {
         @include flex-box(column wrap);
-        justify-content: center;
-        align-items: center;
+        @include justify-content(center)
+        @include align-items(center);
         position: fixed;
         top: 0;
         right: 0;
@@ -171,6 +171,23 @@ body {
             z-index: 1000;
             left: 0;
         }
+        .card-top {
+            @include flex-box(row wrap);
+            @include justify-content(space-between)
+            @include align-items(center);
+            i {
+                cursor: pointer;
+            }
+        }
+        .rent-btn {
+            margin-top: 40px;
+        }
+        .mdl-textfield__error {
+            visibility: visible;
+            margin: 5px 0 5px 0;
+        }
+
+
         /*Disable MDL validation styles, source https://codepen.io/alisterlf/pen/ZGgJQB*/
         .mdl-textfield.is-invalid .mdl-textfield__input {
             border-bottom: 1px solid rgba(0, 0, 0, 0.12);

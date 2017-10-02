@@ -1,44 +1,104 @@
 import helicopterDetailedHtml from './helicopterDetailed.html';
+
 /* @ngInject */
 let helicopterDetailedComponent = {
   template: helicopterDetailedHtml,
   controllerAs: 'helicopterDetailed',
-  controller: function($stateParams, helicopterDetailedService) {
+  controller: function($stateParams, helicopterDetailedService, $scope) {
     const vm = this;
+    vm.getEstimateForm = false;
     vm.id = $stateParams.id;
     vm.totalRevenue = 0;
     vm.data = {};
     vm.rentTime;
-    vm.name;
+    vm.name = '';
+    vm.isEmpty = true;
+    vm.estimate = {
+      total: 0,
+    };
+    vm.getHelicopterDetails = getHelicopterDetails;
     vm.cancelHelicopter = cancelHelicopter;
+    vm.rentHelicopter = rentHelicopter;
     vm.getEstimate = getEstimate;
+    vm.childClick = childClick;
+    vm.checkIfEmpty = checkIfEmpty;
+    vm.stopRentingProcess = stopRentingProcess;
 
-    function getEstimate() {
-      console.log('test')
+    //get helicopter data;
+    vm.getHelicopterDetails()
+
+    function stopRentingProcess() {
+      vm.rentTime = null;
+      vm.name = '';
+      vm.estimate.total = 0;
+      vm.getEstimateForm = false;
+      vm.isEmpty = true;
     }
 
+    //workaround due to problems with validation
+    function checkIfEmpty() {
+      if (document.getElementById('rentTime').classList.contains('ng-empty')) {
+        vm.isEmpty = true;
+      } else {
+        vm.isEmpty = false;
+      }
+    }
+    //functions gets estimate, by first checking the total duration and then deciding which cacluation to take
+    function getEstimate() {
+      vm.estimate.after15Sec = 0;
+      if (vm.rentTime > 15) {
+        vm.estimate.first15Sec = 15 * 20;
+        vm.estimate.after15Sec = (vm.rentTime - 15) * 25
+      } else {
+        vm.estimate.first15Sec = vm.rentTime * 20;
+      }
+      vm.estimate.total = vm.estimate.after15Sec + vm.estimate.first15Sec
+    }
+    //prevents a click on the child from closing the parents
+    function childClick ($event) {
+      $event.stopPropagation();
+    }
+    //function that sends the $http.put reuqest to rent the helicopter
+    function rentHelicopter () {
+      console.log(vm.id)
+      let data = `${vm.estimate.total}//${Math.floor(Date.now() / 1000)}//${vm.rentTime}//${vm.name}`
+      helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
+        console.log(response);
+        vm.stopRentingProcess();
+        vm.getHelicopterDetails();
+      }, function errorCallback(response) {
+        console.log(response)
+      });
+    }
+    // function that allows of to cancel helicopter rentals
     function cancelHelicopter(index) {
       //sets the revenue from flight to 500, and sets status to -1, which the browser transforms into canceled
       vm.data.history[index][0] = 500;
       vm.data.history[index][2] = -1;
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
       helicopterDetailedService.helicopterCancel(vm.id, vm.data.history).then(function successCallback(response) {
-        console.log(response)
+        console.log(response);
       }, function errorCallback(response) {
-        console.log(response)
+        console.log(response);
       });
     }
-    helicopterDetailedService.helicopter(vm.id).then(function(response) {
-      vm.data = response.data;
-      vm.data.history.forEach(function(currentValue) {
-        vm.totalRevenue += parseInt(currentValue[0])
+    //function that calls up helicopter details
+    function getHelicopterDetails () {
+      helicopterDetailedService.helicopter(vm.id).then(function(response) {
+        vm.data = response.data;
+        vm.data.history.forEach(function(currentValue) {
+          vm.totalRevenue += parseInt(currentValue[0])
+        });
+            //First function handles success
+      }, function(response) {
+               //Second function handles error
+        vm.helicopter = 'An error has occured';
       });
-          //First function handles success
-    }, function(response) {
-             //Second function handles error
-      vm.helicopter = 'An error has occured';
-    });
+    }
+
   }
 
+
 }
+
 export default helicopterDetailedComponent;

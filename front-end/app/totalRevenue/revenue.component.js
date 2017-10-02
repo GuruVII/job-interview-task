@@ -3,7 +3,7 @@ import revenueHtml from './revenue.html';
 let revenueComponent = {
   template: revenueHtml,
   controllerAs: 'revenue',
-  controller: function(revenueService) {
+  controller: function(revenueService, $scope) {
     const vm = this;
     vm.totalRevenue = 0;
 

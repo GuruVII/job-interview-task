@@ -6,7 +6,6 @@ import material from 'material-design-lite'
 import revenue from './totalRevenue/revenue.module'
 import routing from './routing';
 
-
 require('../node_modules/material-design-lite/material.min.css')
 require('./main.scss');
 
@@ -18,3 +17,4 @@ angular
   'revenue',
 ])
 .config(routing)
+

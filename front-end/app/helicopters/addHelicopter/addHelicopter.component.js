@@ -3,7 +3,7 @@ import addHelicopterHtml from './addHelicopter.html';
 let addHelicopterComponent = {
   template: addHelicopterHtml,
   controllerAs: 'addHeli',
-  controller: function(addHelicopterService, $rootScope) {
+  controller: function(addHelicopterService, $scope, $rootScope) {
     const vm = this;
     vm.nameSelectionArray =
     [['Flying', 'Hovering', 'Speeding', 'Fast', 'Reliable', 'Zrakomlat', 'Indepedant', 'Voyager', 'Enteprise', 'Defiant', 'Rogue', 'Black', 'Big'],
