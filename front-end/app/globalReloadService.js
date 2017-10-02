@@ -3,9 +3,6 @@ function globalReloadService($rootScope) {
     reloadRevenue: () => {
       $rootScope.$broadcast('reloadRevenue');
     },
-    reloadAll: () => {
-      $rootScope.$broadcast('reloadRevene');
-    },
   }
 }
 /* @ngInject */

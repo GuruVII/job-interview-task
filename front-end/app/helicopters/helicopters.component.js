@@ -3,10 +3,11 @@ import helicoptersHtml from './helicopters.html';
 let helicoptersComponent = {
   template: helicoptersHtml,
   controllerAs: 'helicopters',
-  controller: function(helicoptersService, $rootScope) {
+  controller: function(helicoptersService, reloadService, $interval, $scope) {
     const vm = this;
     vm.helicopter = [];
-    $rootScope.getHelicopters = () => {
+    vm.getHelicopters = getHelicopters;
+    function getHelicopters () {
       helicoptersService.helicopter().then(function(response) {
           //First function handles success
         vm.helicopter = [ ...response.data ];
@@ -15,8 +16,15 @@ let helicoptersComponent = {
         vm.helicopter = 'An error has occured';
       });
     }
-    $rootScope.getHelicopters()
+    $scope.$on('refreshHelicopters', function () {
+      vm.getHelicopters();
+    })
+    //reloads data every minute
+    $interval(function () {
+      vm.getHelicopters();
+      reloadService.reloadRevenue();
+    }, 60000);
+    vm.getHelicopters();
   }
-
 }
 export default helicoptersComponent;

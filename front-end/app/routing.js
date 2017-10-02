@@ -5,12 +5,12 @@ function Routes($stateProvider, $urlRouterProvider) {
   $stateProvider.state('error', {
     url: '/error',
     template: '<h2>Error 404</h2>'
-  });
-  $stateProvider.state('helicopters', {
+  })
+  .state('helicopters', {
     url: '/',
     component: 'helicopters'
-  });
-  $stateProvider.state('helicopterDetailed', {
+  })
+  .state('helicopterDetailed', {
     url: '/helicopter/:id',
     component: 'helicopterDetailed'
   });

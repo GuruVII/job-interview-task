@@ -3,7 +3,7 @@ import addHelicopterHtml from './addHelicopter.html';
 let addHelicopterComponent = {
   template: addHelicopterHtml,
   controllerAs: 'addHeli',
-  controller: function(addHelicopterService, $scope, $rootScope) {
+  controller: function(addHelicopterService, $scope) {
     const vm = this;
     vm.nameSelectionArray =
     [['Flying', 'Hovering', 'Speeding', 'Fast', 'Reliable', 'Zrakomlat', 'Indepedant', 'Voyager', 'Enteprise', 'Defiant', 'Rogue', 'Black', 'Big'],
@@ -32,7 +32,8 @@ let addHelicopterComponent = {
 
       addHelicopterService.addHelicopter(data).then(function successCallback(response) {
         //if the post is sucessful, this calls the function that does another $http.get from the server
-        $rootScope.getHelicopters();
+        //$rootScope.getHelicopters();
+        $scope.$emit('refreshHelicopters')
       }, function errorCallback(response) {
         console.log(response)
       });

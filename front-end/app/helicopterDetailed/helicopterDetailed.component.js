@@ -4,7 +4,7 @@ import helicopterDetailedHtml from './helicopterDetailed.html';
 let helicopterDetailedComponent = {
   template: helicopterDetailedHtml,
   controllerAs: 'helicopterDetailed',
-  controller: function($stateParams, helicopterDetailedService, $scope) {
+  controller: function($stateParams, helicopterDetailedService, reloadService, $interval) {
     const vm = this;
     vm.getEstimateForm = false;
     vm.id = $stateParams.id;
@@ -25,8 +25,7 @@ let helicopterDetailedComponent = {
     vm.stopRentingProcess = stopRentingProcess;
 
     //get helicopter data;
-    vm.getHelicopterDetails()
-
+    vm.getHelicopterDetails();
     function stopRentingProcess() {
       vm.rentTime = null;
       vm.name = '';
@@ -66,6 +65,7 @@ let helicopterDetailedComponent = {
         console.log(response);
         vm.stopRentingProcess();
         vm.getHelicopterDetails();
+        reloadService.reloadRevenue();
       }, function errorCallback(response) {
         console.log(response)
       });
@@ -77,6 +77,7 @@ let helicopterDetailedComponent = {
       vm.data.history[index][2] = -1;
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
       helicopterDetailedService.helicopterCancel(vm.id, vm.data.history).then(function successCallback(response) {
+        reloadService.reloadRevenue();
         console.log(response);
       }, function errorCallback(response) {
         console.log(response);
@@ -86,6 +87,7 @@ let helicopterDetailedComponent = {
     function getHelicopterDetails () {
       helicopterDetailedService.helicopter(vm.id).then(function(response) {
         vm.data = response.data;
+        vm.totalRevenue = 0;
         vm.data.history.forEach(function(currentValue) {
           vm.totalRevenue += parseInt(currentValue[0])
         });
@@ -95,7 +97,11 @@ let helicopterDetailedComponent = {
         vm.helicopter = 'An error has occured';
       });
     }
-
+    //refreshes data from every minute
+    $interval(function () {
+      vm.getHelicopterDetails();
+      reloadService.reloadRevenue();
+    }, 60000);
   }
 
 
