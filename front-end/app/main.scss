@@ -6,22 +6,46 @@ body {
     font-family: "Roboto","Helvetica","Arial",sans-serif;
     //a combination 
 }
-
+.hide-below-340px{
+    @media(max-width: 340px){
+        display: none;
+    }
+}
 //HEADER
 .header {
     overflow:hidden;
     &.mdl-layout__header {
-     background-color: $primary-color;
+        background-color: $primary-color;
+        @media(max-width: 1024px){
+        @include flex-box(row wrap);
+        }
     }
     .mdl-button {
         color: white;
         line-height: 36px;
     }
+    .mdl-layout-title {
+        @media(max-width: 500px) {
+            display: none;
+        }
+    }
+    .mdl-layout__header-row {
+        @include flex-box(row wrap);
+        @include align-items(center);
+        @include justify-content(space-between);
+        width: 100%;
+        p {
+            margin: 0;
+        }
+        @media(max-width: 615px) {
+            padding: 0 16px 0 20px;
+        }
+    }
 }
 
 .logo {
     width: 50px;
-    margin: 10px;
+    margin-right: 10px;
     padding: 3px;
     border-radius: 50%;
     background-color: white;
@@ -130,14 +154,47 @@ body {
             }
             .mdl-card__actions {
                 padding-left: 16px;
+                @media(max-width: 520px) {
+                    padding-left: 8px;
+                }
+                ol {
+                    @media(max-width: 950px) {
+                        padding-left: 0px;
+                    }
+                }
                 .order-history {
-                   @include flex-box(row wrap);
-                   @include justify-content(flex-start);
-                   .order-details{
-                        margin-right: 25px
+                    @include flex-box(row wrap);
+                    @include justify-content(flex-start);
+                    padding-left: 8px;
+                   .order-details {
+                        margin-bottom: 10px
+                    }
+                    .material-icons {
+                        cursor: pointer;
+                        &:active {
+                            background-color: rgb (204, 0, 0);
+                        }
+                    }
+                    .order-history-grid {
+                        @include flex-box(row wrap);
+                        @include align-items(center);
+                        @include justify-content(space-evenly);
+                        @include justify-content(space-between);
+                        width: 35%;
+                        &:first-child {
+                            width: 20%;
+                        }
+                        &:nth-child(4) {
+                            color: #cc0000;
+                            width: 10%;
+                        }
+                        @media(max-width: 950px) {
+                            font-size: 0.8em;
+                        }
                     }
                 }
             }
+
             .wrapper-detailed {
                 @include flex-box(row wrap);
                 @include justify-content(flex-start);

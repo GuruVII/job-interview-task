@@ -16,11 +16,11 @@
             <ol>
                 <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index">
                     <!--order[0] = revenue, order[1] unix time in seconds, order[2] = duration -->
-                	<span class="order-details">Revenue: {{order[0]}}€</span> 
-                	<span class="order-details">Date: {{order[1] * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
-                	<span ng-if="order[2] != -1" class="order-details">Duration: {{order[2]}}s</span>
-                	<span ng-if="order[2] == -1" class="order-details">Duration: Canceled</span>
-                    <button class="mdl-button" ng-click="helicopterDetailed.cancelHelicopter($index)">Cancel</button>
+                	<span class="order-details order-history-grid">Revenue: {{order[0]}}€</span> 
+                	<span class="order-details order-history-grid">Date: {{order[1] * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
+                	<span ng-if="order[2] != -1" class="order-details order-history-grid">Duration: {{order[2]}}s</span>
+                	<span ng-if="order[2] == -1" class="order-details order-history-grid">Flight canceled</span> 
+                    <span class="order-history-grid order-details" ng-if="order[2] != -1"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index)">close</i></span>
                 </li>
             </ol>
             <div class="wrapper-detailed">
@@ -35,7 +35,7 @@
                     <div class="mdl-card__supporting-text">
                         <div class="card-top">
                             <h5>Rent helicopter</h5>
-                            <i class="material-icons" ng-click="helicopterDetailed.getEstimateForm = false">close</i>
+                            <i class="material-icons" ng-click="helicopterDetailed.stopRentingProcess()">close</i>
                         </div>
                 <form action="#" name="rentHelicopter">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

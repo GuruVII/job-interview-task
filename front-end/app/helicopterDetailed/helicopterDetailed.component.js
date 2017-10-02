@@ -23,7 +23,7 @@ let helicopterDetailedComponent = {
     vm.childClick = childClick;
     vm.checkIfEmpty = checkIfEmpty;
     vm.stopRentingProcess = stopRentingProcess;
-
+    vm.getOneRevenue = getOneRevenue;
     //get helicopter data;
     vm.getHelicopterDetails();
     function stopRentingProcess() {
@@ -78,6 +78,7 @@ let helicopterDetailedComponent = {
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
       helicopterDetailedService.helicopterCancel(vm.id, vm.data.history).then(function successCallback(response) {
         reloadService.reloadRevenue();
+        vm.getOneRevenue();
         console.log(response);
       }, function errorCallback(response) {
         console.log(response);
@@ -87,14 +88,18 @@ let helicopterDetailedComponent = {
     function getHelicopterDetails () {
       helicopterDetailedService.helicopter(vm.id).then(function(response) {
         vm.data = response.data;
-        vm.totalRevenue = 0;
-        vm.data.history.forEach(function(currentValue) {
-          vm.totalRevenue += parseInt(currentValue[0])
-        });
-            //First function handles success
+        vm.getOneRevenue();
+        //First function handles success
       }, function(response) {
                //Second function handles error
         vm.helicopter = 'An error has occured';
+      });
+    }
+
+    function getOneRevenue () {
+      vm.totalRevenue = 0;
+      vm.data.history.forEach(function(currentValue) {
+        vm.totalRevenue += parseInt(currentValue[0])
       });
     }
     //refreshes data from every minute
