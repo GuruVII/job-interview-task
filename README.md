@@ -26,3 +26,10 @@ npm, mongoDB
 	Frontend part of the page can be accessed on localhost:9000
 	Backend part can be accessed on localhost:3000/your-route
 
+## 4) DEMO
+[Link](https://helicopters.front-end.guru/)
+
+### Boilerplate sources
+[Backend](https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd)
+[Frontend](git://github.com/KarlDoyle/angular-es6-webpack-starter.git)
+
