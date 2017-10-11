@@ -31,5 +31,5 @@ npm, mongoDB
 
 ### Boilerplate sources
 [Backend](https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd)
-[Frontend](git://github.com/KarlDoyle/angular-es6-webpack-starter.git)
+[Frontend](https://github.com/KarlDoyle/angular-es6-webpack-starter.git)
 
