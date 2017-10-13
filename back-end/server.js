@@ -1,7 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const  app = express();
-const  port = process.env.PORT || 3000;
+const  port = process.env.PORT || 3001;
 const  mongoose = require('mongoose');
 const  Helicopter = require('./api/models/helicopterModel');
 const  bodyParser = require('body-parser');

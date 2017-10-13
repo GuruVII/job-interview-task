@@ -1,7 +1,7 @@
 function revenueService($http) {
   return {
     revenue: () => {
-      return $http.get('http://localhost:3000/helicopters/revenue')
+      return $http.get('http://localhost:3001/helicopters/revenue')
     }
   }
 }

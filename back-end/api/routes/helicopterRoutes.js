@@ -5,16 +5,16 @@ module.exports = function(app) {
   // helciopter Routes
   app.route('/helicopters')
     .get(helicopter.listAllHelicopters)
-    .post(helicopter.createHelicopter);
+    .post(helicopter.createHelicopter)
 
   app.route('/helicopters/revenue')
-    .get(helicopter.totalRevenue);
+    .get(helicopter.totalRevenue)
 
   app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
     .put(helicopter.updateHelicopterHistory)
-    .delete(helicopter.deleteHelicopter);
+    .delete(helicopter.deleteHelicopter)
 
-  app.route('/helicopterCancel/:helicopterId')
-      .put(helicopter.cancelHelicopter);
+  app.route('/helicopters/cancel/:helicopterId')
+      .put(helicopter.cancelHelicopter)
 };

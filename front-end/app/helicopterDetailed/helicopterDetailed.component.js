@@ -59,7 +59,6 @@ let helicopterDetailedComponent = {
     }
     //function that sends the $http.put reuqest to rent the helicopter
     function rentHelicopter () {
-      console.log(vm.id)
       let data = `${vm.estimate.total}//${Math.floor(Date.now() / 1000)}//${vm.rentTime}//${vm.name}`
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
         console.log(response);
