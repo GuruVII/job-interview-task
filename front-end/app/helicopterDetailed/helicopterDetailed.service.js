@@ -1,4 +1,6 @@
 function helicopterDetailedService($http) {
+  //https://front-end.guru/helicopters
+  //https://localhost:3001
   return {
     helicopter: (id) => {
       return $http.get(`http://localhost:3001/helicopters/${id}`)
