@@ -7,9 +7,6 @@ module.exports = function(app) {
     .get(helicopter.listAllHelicopters)
     .post(helicopter.createHelicopter)
 
-  app.route('/helicopters/revenue')
-    .get(helicopter.totalRevenue)
-
   app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
     .put(helicopter.updateHelicopterHistory)
@@ -17,4 +14,7 @@ module.exports = function(app) {
 
   app.route('/helicopters/cancel/:helicopterId')
       .put(helicopter.cancelHelicopter)
+
+  app.route('/helicopters/retire/:helicopterId')
+    .put(helicopter.retireHelicopter)
 };

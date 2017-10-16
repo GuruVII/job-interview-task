@@ -18,9 +18,10 @@ app.use(cors());
 
 
 //importing route
-const routes = require('./api/routes/helicopterRoutes');
-routes(app); //register the route
-
+const helicopterRoutes = require('./api/routes/helicopterRoutes');
+const dashboardRoutes = require('./api/routes/dashboardRoutes');
+helicopterRoutes(app); //register the route
+dashboardRoutes(app); //register the route
 
 app.listen(port);
 

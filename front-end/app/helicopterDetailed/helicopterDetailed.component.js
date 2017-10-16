@@ -19,11 +19,13 @@ let helicopterDetailedComponent = {
     vm.getHelicopterDetails = getHelicopterDetails;
     vm.cancelHelicopter = cancelHelicopter;
     vm.rentHelicopter = rentHelicopter;
+    vm.retireHelicopter = retireHelicopter;
     vm.getEstimate = getEstimate;
     vm.childClick = childClick;
     vm.checkIfEmpty = checkIfEmpty;
     vm.stopRentingProcess = stopRentingProcess;
     vm.getOneRevenue = getOneRevenue;
+
     //get helicopter data;
     vm.getHelicopterDetails();
     function stopRentingProcess() {
@@ -69,9 +71,19 @@ let helicopterDetailedComponent = {
         console.log(response)
       });
     }
+    // function that retires the helicopter
+    function retireHelicopter () {
+      helicopterDetailedService.helicopterRetire(vm.id).then(function successCallback(response) {
+        console.log(response);
+        console.log(`helicopter ${vm.id} has retired`)
+      }, function errorCallback(response) {
+        console.log(response)
+      });
+    }
+
     // function that allows of to cancel helicopter rentals
     function cancelHelicopter(index) {
-      //sets the revenue from flight to 500, and sets status to -1, which the browser transforms into canceled
+      //sets the revenue from flight to 500, and sets status to -1, which the browser translates into the word canceled
       vm.data.history[index][0] = 500;
       vm.data.history[index][2] = -1;
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
@@ -83,6 +95,13 @@ let helicopterDetailedComponent = {
         console.log(response);
       });
     }
+    //get revenue of a single helicopter
+    function getOneRevenue () {
+      vm.totalRevenue = 0;
+      vm.data.history.forEach(function(currentValue) {
+        vm.totalRevenue += parseInt(currentValue[0])
+      });
+    }
     //function that calls up helicopter details
     function getHelicopterDetails () {
       helicopterDetailedService.helicopter(vm.id).then(function(response) {
@@ -92,13 +111,6 @@ let helicopterDetailedComponent = {
       }, function(response) {
                //Second function handles error
         vm.helicopter = 'An error has occured';
-      });
-    }
-
-    function getOneRevenue () {
-      vm.totalRevenue = 0;
-      vm.data.history.forEach(function(currentValue) {
-        vm.totalRevenue += parseInt(currentValue[0])
       });
     }
     //refreshes data from every minute

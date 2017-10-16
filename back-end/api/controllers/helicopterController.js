@@ -1,20 +1,6 @@
 const mongoose = require('mongoose'),
 helicopter = mongoose.model('Helicopters');
 
-exports.totalRevenue = function(req, res) {
-  let totalRevenue = 0;
-  helicopter.find({}, function(err, helicopter) {
-    helicopter.forEach(function(item) {
-      item.history.forEach(function(value){
-        totalRevenue += parseInt(value[0])
-      })
-    })
-    if (err)
-      res.send(err);
-    res.json(totalRevenue);
-  });
-};
-
 exports.listAllHelicopters = function(req, res) {
   helicopter.find({}, function(err, helicopter) {
     if (err)
@@ -60,6 +46,13 @@ exports.updateHelicopterHistory = function(req, res) {
   });
 };
 
+exports.retireHelicopter = function(req, res) {
+  helicopter.findOneAndUpdate({_id: req.params.helicopterId}, req.body, {new: true}, function(err, helicopter) {
+    if (err)
+      res.send(err);
+    res.json(helicopter);
+  });
+};
 
 exports.deleteHelicopter = function(req, res) {
   helicopter.remove({

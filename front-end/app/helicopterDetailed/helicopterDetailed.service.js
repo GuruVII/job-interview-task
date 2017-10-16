@@ -15,6 +15,12 @@ function helicopterDetailedService($http) {
       data.history = history;
       return $http.put(`http://localhost:3001/helicopters/cancel/${id}`, data)
     },
+    helicopterRetire: (id) => {
+      let data = {};
+      data.retired = true;
+      console.log(data)
+      return $http.put(`http://localhost:3001/helicopters/retire/${id}`, data)
+    },
   }
 }
 /* @ngInject */

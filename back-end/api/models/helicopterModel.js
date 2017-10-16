@@ -24,6 +24,9 @@ var HelicopterSchema = new Schema({
     type: String,
     required: 'Kindly enter the picture name'
   },
+  retired: {
+    type: Boolean,
+  },
   history: [],
 });
 
