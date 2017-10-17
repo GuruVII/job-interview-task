@@ -1,5 +1,7 @@
 import helicopterDetailedHtml from './helicopterDetailed.html';
 import Highcharts from 'highcharts';
+require('highcharts/modules/exporting')(Highcharts);
+
 
 /* @ngInject */
 let helicopterDetailedComponent = {
@@ -121,8 +123,6 @@ let helicopterDetailedComponent = {
     function createGraph () {
       helicopterDetailedService.getGraphData(vm.id).then(function successCallback(response) {
         vm.graphData = [ ...response.data ];
-        console.log(response)
-        console.log(vm.graphData)
         Highcharts.chart('graph', {
           title: {
             text: 'Helicopter usage through time'
@@ -132,9 +132,6 @@ let helicopterDetailedComponent = {
           },
           tooltip: {
             pointFormat: 'Rented for: {point.y}s.',
-          },
-          legend: {
-            enabled: false
           },
           yAxis: {
             title: {
@@ -146,23 +143,29 @@ let helicopterDetailedComponent = {
             color: '#702963',
             data: vm.graphData
           } ],
-        exporting: {
+          exporting: {
             buttons: {
-                customButton: {
-                    x: -62,
-                    onclick: function () {
-                        alert('Clicked');
-                    },
-                    symbol: 'circle'
-                }
+              contextButton: {
+                enabled: false
+              },
+              refreshButton: {
+                _titleKey: 'Refresh',
+                onclick: function () {
+                  vm.createGraph();
+                },
+                text: 'Refresh'
+              }
             }
-        },
+          },
           responsive: {
             rules: [ {
               condition: {
                 maxWidth: 500,
               },
             } ]
+          },
+          lang: {
+            Refresh: 'Refresh'
           }
         });
       }, function errorCallback(response) {
