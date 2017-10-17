@@ -28,8 +28,10 @@
                 <a class="mdl-button mdl-js-button" ng-click="helicopterDetailed.getEstimateForm = true">Rent Helicopter</a>
                 <a class="mdl-button mdl-js-button" ng-click="helicopterDetailed.retireHelicopter()">Retire Helicopter</a>
             </div>
+            
         </div>
     </div>
+    <div id="graph" style="width:100%; height:400px;"></div>
     <!--Renting FORM -->
     <div class="rent-helicopter-background" ng-if="helicopterDetailed.getEstimateForm" ng-click="helicopterDetailed.stopRentingProcess()">
         <div class="rentHelicopterCard" ng-click="helicopterDetailed.childClick($event)">

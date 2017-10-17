@@ -1,7 +1,8 @@
 import angular from 'angular';
 import component from './helicopterDetailed.component';
 import service from './helicopterDetailed.service';
-import reloadService from '../globalReloadService'
+import reloadService from '../globalReloadService';
+
 /* @ngInject */
 angular
   .module('helicopterDetailed', [])
