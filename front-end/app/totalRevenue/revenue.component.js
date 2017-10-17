@@ -16,7 +16,6 @@ let revenueComponent = {
 
     function getRevenue () {
       revenueService.revenue().then(function(response) {
-        console.log(response);
         //First function handles success
         vm.totalRevenue = response.data.totalRevenue;
       }, function(response) {

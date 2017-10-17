@@ -20,7 +20,7 @@
                 	<span class="order-details order-history-grid">Date: {{order[1] * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
                 	<span ng-if="order[2] != -1" class="order-details order-history-grid">Duration: {{order[2]}}s</span>
                 	<span ng-if="order[2] == -1" class="order-details order-history-grid">Flight canceled</span> 
-                    <span class="order-history-grid order-details" ng-if="order[2] != -1"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index)">close</i></span>
+                    <span class="order-history-grid order-details" ng-if="order[2] != -1"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index);">close</i></span>
                 </li>
             </ol>
             <div class="wrapper-detailed">
@@ -30,8 +30,9 @@
             </div>
             
         </div>
+        <div id="graph"></div>
     </div>
-    <div id="graph" style="width:100%; height:400px;"></div>
+
     <!--Renting FORM -->
     <div class="rent-helicopter-background" ng-if="helicopterDetailed.getEstimateForm" ng-click="helicopterDetailed.stopRentingProcess()">
         <div class="rentHelicopterCard" ng-click="helicopterDetailed.childClick($event)">

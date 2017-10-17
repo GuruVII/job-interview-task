@@ -1,3 +1,6 @@
+var GetDateFromTimestamp = require('../mixins/GetDateFromTimestamp');
+var sortArrayofArrays = require('../mixins/sortArrayofArrays');
+
 const mongoose = require('mongoose'),
 helicopter = mongoose.model('Helicopters');
 
@@ -66,28 +69,45 @@ exports.deleteHelicopter = function(req, res) {
 //history array of each helicopter [earning, data of rent (unix in seconds), rent time, company name]
 exports.getGraphData = function(req, res) {
   let graphData = {};
+  let graphDataArray;
+  let timeStamp;
   let date;
-  function GetDateFromTimestamp(stamp) {
-    let fullDate = new Date(parseInt(stamp))
-    return `${fullDate.getFullYear()}-${fullDate.getMonth()+1}-${fullDate.getDate()}`
-  }
   helicopter.findById(req.params.helicopterId, function(err, helicopter) {
     helicopter.history.forEach(function(usageHistoryEntry) {
-      date = GetDateFromTimestamp(usageHistoryEntry[1] + '000');
+      timeStamp = usageHistoryEntry[1];
+
+      date = GetDateFromTimestamp(timeStamp + '000');
+      //creates an object of arrays
       if (usageHistoryEntry[2] != -1) {
         if (graphData[date] == undefined) {
-          graphData[date] = {}
+          graphData[date] = []
         }
-        graphData[date]['date'] = date;
-        if (graphData[date]['usage'] == undefined) {
-          graphData[date]['usage'] = parseInt(usageHistoryEntry[2])
+        graphData[date][0] = (timeStamp - (timeStamp % (60 * 60 * 24))) * 1000
+        if (graphData[date][1] == undefined) {
+          graphData[date][1] = parseInt(usageHistoryEntry[2])
         } else {
-          graphData[date]['usage']+= parseInt(usageHistoryEntry[2])
+          graphData[date][1]+= parseInt(usageHistoryEntry[2])
         }
       }
     })
+    //turns the object of arrays into an array of arrays
+    graphDataArray = Object.keys(graphData).map(key => {
+      return graphData[key];
+    })
+
+    //sorts the array of arrays, by array[0]
+    graphDataArray.sort(sortArrayofArrays);
+    let arrayLength = graphDataArray.length;
+    let dayInMS = 86400000
+    //adds values for every missing day
+    for (let i = 0; i < arrayLength - 1; i++){
+      if ((graphDataArray[i][0] + dayInMS) != graphDataArray[i+1][0]) {
+        graphDataArray.splice(i+1, 0, [graphDataArray[i][0] + dayInMS, 0])
+        arrayLength ++
+      }
+    }
     if (err)
       res.send(err);
-    res.json(graphData);
+    res.json(graphDataArray);
   });
 };

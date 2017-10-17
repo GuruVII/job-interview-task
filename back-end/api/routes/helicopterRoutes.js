@@ -7,17 +7,17 @@ module.exports = function(app) {
     .get(helicopter.listAllHelicopters)
     .post(helicopter.createHelicopter)
 
-  app.route('/helicopters/:helicopterId')
+  app.route('/helicopter/:helicopterId')
     .get(helicopter.readHelicopter)
     .put(helicopter.rentHelicopter)
     .delete(helicopter.deleteHelicopter)
 
-  app.route('/helicopters/cancel/:helicopterId')
+  app.route('/helicopter/cancel/:helicopterId')
       .put(helicopter.cancelHelicopter)
 
-  app.route('/helicopters/retire/:helicopterId')
+  app.route('/helicopter/retire/:helicopterId')
     .put(helicopter.retireHelicopter)
     
-  app.route('/helicopters/graph/:helicopterId')
+  app.route('/helicopter/graph/:helicopterId')
     .get(helicopter.getGraphData) 
 };

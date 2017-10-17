@@ -26,9 +26,14 @@ let helicopterDetailedComponent = {
     vm.checkIfEmpty = checkIfEmpty;
     vm.stopRentingProcess = stopRentingProcess;
     vm.getOneRevenue = getOneRevenue;
+    vm.createGraph = createGraph;
+    vm.getReloadedData = getReloadedData;
 
     //get helicopter data;
     vm.getHelicopterDetails();
+    //get graph
+    vm.createGraph();
+
     function stopRentingProcess() {
       vm.rentTime = null;
       vm.name = '';
@@ -36,7 +41,6 @@ let helicopterDetailedComponent = {
       vm.getEstimateForm = false;
       vm.isEmpty = true;
     }
-
     //workaround due to problems with validation
     function checkIfEmpty() {
       if (document.getElementById('rentTime').classList.contains('ng-empty')) {
@@ -60,11 +64,17 @@ let helicopterDetailedComponent = {
     function childClick ($event) {
       $event.stopPropagation();
     }
+    //get revenue of a single helicopter
+    function getOneRevenue () {
+      vm.totalRevenue = 0;
+      vm.data.history.forEach(function(currentValue) {
+        vm.totalRevenue += parseInt(currentValue[0])
+      });
+    }
     //function that sends the $http.put reuqest to rent the helicopter
     function rentHelicopter () {
       let data = `${vm.estimate.total}//${Math.floor(Date.now() / 1000)}//${vm.rentTime}//${vm.name}`
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
-        console.log(response);
         vm.stopRentingProcess();
         vm.getHelicopterDetails();
         reloadService.reloadRevenue();
@@ -90,44 +100,80 @@ let helicopterDetailedComponent = {
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
       helicopterDetailedService.helicopterCancel(vm.id, vm.data.history).then(function successCallback(response) {
         reloadService.reloadRevenue();
-        vm.getOneRevenue();
+        vm.getReloadedData()
         console.log(response);
       }, function errorCallback(response) {
         console.log(response);
       });
     }
-    //get revenue of a single helicopter
-    function getOneRevenue () {
-      vm.totalRevenue = 0;
-      vm.data.history.forEach(function(currentValue) {
-        vm.totalRevenue += parseInt(currentValue[0])
-      });
-    }
     //function that calls up helicopter details
     function getHelicopterDetails () {
-      helicopterDetailedService.helicopter(vm.id).then(function(response) {
+      helicopterDetailedService.helicopter(vm.id).then(function successCallback(response) {
         vm.data = response.data;
         vm.getOneRevenue();
         //First function handles success
-      }, function(response) {
+      }, function errorCallback(response) {
                //Second function handles error
         vm.helicopter = 'An error has occured';
       });
     }
-    Highcharts.chart('graph', {
-      title: {
-        text: 'Helicopter usage through time'
-      },
 
-      xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ]
-      },
-      series: [ {
-        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-      } ]
-    });
+    function createGraph () {
+      helicopterDetailedService.getGraphData(vm.id).then(function successCallback(response) {
+        vm.graphData = [ ...response.data ];
+        console.log(response)
+        console.log(vm.graphData)
+        Highcharts.chart('graph', {
+          title: {
+            text: 'Helicopter usage through time'
+          },
+          xAxis: {
+            type: 'datetime'
+          },
+          tooltip: {
+            pointFormat: 'Rented for: {point.y}s.',
+          },
+          legend: {
+            enabled: false
+          },
+          yAxis: {
+            title: {
+              text: 'seconds'
+            }
+          },
+          series: [ {
+            name: 'Rented for',
+            color: '#702963',
+            data: vm.graphData
+          } ],
+        exporting: {
+            buttons: {
+                customButton: {
+                    x: -62,
+                    onclick: function () {
+                        alert('Clicked');
+                    },
+                    symbol: 'circle'
+                }
+            }
+        },
+          responsive: {
+            rules: [ {
+              condition: {
+                maxWidth: 500,
+              },
+            } ]
+          }
+        });
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+    }
+
+    function getReloadedData () {
+      vm.createGraph ();
+      vm.getOneRevenue ();
+    }
 
     //refreshes data from every minute
     $interval(function () {
