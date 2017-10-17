@@ -116,7 +116,7 @@ let helicopterDetailedComponent = {
     }
     Highcharts.chart('graph', {
       title: {
-        text: 'Temperature Data'
+        text: 'Helicopter usage through time'
       },
 
       xAxis: {

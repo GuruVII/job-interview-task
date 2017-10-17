@@ -17,4 +17,7 @@ module.exports = function(app) {
 
   app.route('/helicopters/retire/:helicopterId')
     .put(helicopter.retireHelicopter)
+    
+  app.route('/helicopters/graph/:helicopterId')
+    .get(helicopter.getGraphData) 
 };

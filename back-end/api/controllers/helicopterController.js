@@ -63,3 +63,31 @@ exports.deleteHelicopter = function(req, res) {
     res.json({ message: 'Helicopter successfully deleted' });
   });
 };
+//history array of each helicopter [earning, data of rent (unix in seconds), rent time, company name]
+exports.getGraphData = function(req, res) {
+  let graphData = {};
+  let date;
+  function GetDateFromTimestamp(stamp) {
+    let fullDate = new Date(parseInt(stamp))
+    return `${fullDate.getFullYear()}-${fullDate.getMonth()+1}-${fullDate.getDate()}`
+  }
+  helicopter.findById(req.params.helicopterId, function(err, helicopter) {
+    helicopter.history.forEach(function(usageHistoryEntry) {
+      date = GetDateFromTimestamp(usageHistoryEntry[1] + '000');
+      if (usageHistoryEntry[2] != -1) {
+        if (graphData[date] == undefined) {
+          graphData[date] = {}
+        }
+        graphData[date]['date'] = date;
+        if (graphData[date]['usage'] == undefined) {
+          graphData[date]['usage'] = parseInt(usageHistoryEntry[2])
+        } else {
+          graphData[date]['usage']+= parseInt(usageHistoryEntry[2])
+        }
+      }
+    })
+    if (err)
+      res.send(err);
+    res.json(graphData);
+  });
+};
