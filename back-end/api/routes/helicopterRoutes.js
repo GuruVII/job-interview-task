@@ -9,7 +9,7 @@ module.exports = function(app) {
 
   app.route('/helicopters/:helicopterId')
     .get(helicopter.readHelicopter)
-    .put(helicopter.updateHelicopterHistory)
+    .put(helicopter.rentHelicopter)
     .delete(helicopter.deleteHelicopter)
 
   app.route('/helicopters/cancel/:helicopterId')

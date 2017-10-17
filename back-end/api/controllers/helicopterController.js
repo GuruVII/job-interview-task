@@ -35,8 +35,8 @@ exports.cancelHelicopter = function(req, res) {
   });
 };
 
-exports.updateHelicopterHistory = function(req, res) {
-  //the input is changed into an array, and the string is transformed into integers
+exports.rentHelicopter = function(req, res) {
+  //the input is changed into an array
   let item = req.body.history.split("//")
   //this pushes the new value on top of the existing one
   helicopter.findOneAndUpdate({_id: req.params.helicopterId}, {$push: {history: item}}, {new: true}, function(err, helicopter) {

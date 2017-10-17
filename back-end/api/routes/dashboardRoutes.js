@@ -6,5 +6,12 @@ module.exports = function(app) {
 
 
   app.route('/dashboard/revenue')
-    .get(dashboard.totalRevenue)
+    .get(dashboard.Revenue)
+
+  app.route('/dashboard/currently-rented')
+    .get(dashboard.numberOfCurrentlyRented)
+   app.route('/dashboard/most-rented')
+    .get(dashboard.mostRented)
+
+
 };
