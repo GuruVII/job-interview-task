@@ -9,9 +9,9 @@ exports.Revenue = function(req, res) {
   dashboard.find({}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       helicopter.history.forEach(function(usageHistoryEntry){
-        totalRevenue += parseInt(usageHistoryEntry[0]);
-        if ((parseInt(usageHistoryEntry[1]) + 3600) >= currentTime ){
-          revenueLastHourPerMin += parseInt(usageHistoryEntry[0]);
+        totalRevenue += parseInt(usageHistoryEntry.revenue);
+        if ((parseInt(usageHistoryEntry.start) + 3600) >= currentTime ){
+          revenueLastHourPerMin += parseInt(usageHistoryEntry.revenue);
         }
       })
     })
@@ -31,7 +31,7 @@ exports.numberOfCurrentlyRented = function(req, res) {
       let helicopterHistoryLength = helicopter.history.length
       //newest one if last, so we search array from last to first.
       for (let i = helicopterHistoryLength - 1; i > 0; i--){
-        if ((parseInt(helicopter.history[i][1]) + parseInt(helicopter.history[i][2])) > currentTime){
+        if ((parseInt(helicopter.history[i].start) + parseInt(helicopter.history[i].duration)) > currentTime){
           currentlyRented ++
         } else {
           break
@@ -52,7 +52,7 @@ exports.mostRented = function(req, res) {
     dashboard.forEach(function(helicopter) {
       rentedAmount = 0;
       helicopter.history.forEach(function(usageHistoryEntry) {
-        if (usageHistoryEntry[2] != -1){
+        if (usageHistoryEntry.duration != -1){
           rentedAmount ++
         }
       })

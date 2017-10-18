@@ -17,12 +17,11 @@
             <p ng-if="helicopterDetailed.data.history.length == 0">Helicopter is yet to be rented</p>
             <ol>
                 <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index">
-                    <!--order[0] = revenue, order[1] unix time in seconds, order[2] = duration -->
-                	<span class="order-details order-history-grid">Revenue: {{order[0] | currency:"€" :0}}</span> 
-                	<span class="order-details order-history-grid">Date: {{order[1] * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
-                	<span ng-if="order[2] != -1" class="order-details order-history-grid">Duration: {{order[2]}}s</span>
-                	<span ng-if="order[2] == -1" class="order-details order-history-grid">Flight canceled</span> 
-                    <span class="order-history-grid order-details" ng-if="order[2] != -1 && !helicopterDetailed.data.retired"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index); helicopterDetailed.stopScroll($event)">close</i></span>
+                	<span class="order-details order-history-grid">Revenue: {{order.revenue | currency:"€" :0}}</span> 
+                	<span class="order-details order-history-grid">Date: {{order.start * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
+                	<span ng-if="order.duration != -1" class="order-details order-history-grid">Duration: {{order.duration}}s</span>
+                	<span ng-if="order.duration == -1" class="order-details order-history-grid">Flight canceled</span> 
+                    <span class="order-history-grid order-details" ng-if="order.duration != -1 && !helicopterDetailed.data.retired"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index); helicopterDetailed.stopScroll($event)">close</i></span>
                 </li>
             </ol>
             <div class="wrapper-detailed" id="revenue">

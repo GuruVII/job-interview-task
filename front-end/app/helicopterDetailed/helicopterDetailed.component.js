@@ -73,7 +73,7 @@ let helicopterDetailedComponent = {
     function getOneRevenue () {
       vm.totalRevenue = 0;
       vm.data.history.forEach(function(currentValue) {
-        vm.totalRevenue += parseInt(currentValue[0])
+        vm.totalRevenue += parseInt(currentValue.revenue)
       });
     }
     //function that sends the $http.put reuqest to rent the helicopter
@@ -103,8 +103,9 @@ let helicopterDetailedComponent = {
     // function that allows of to cancel helicopter rentals
     function cancelHelicopter(index) {
       //sets the revenue from flight to 500, and sets status to -1, which the browser translates into the word canceled
-      vm.data.history[index][0] = 500;
-      vm.data.history[index][2] = -1;
+      vm.data.history[index].revenue = 500;
+      vm.data.history[index].duration = -1;
+      vm.data.history[index].end = -1;
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
       helicopterDetailedService.helicopterCancel(vm.id, vm.data.history).then(function successCallback(response) {
         reloadService.reloadRevenue();
