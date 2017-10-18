@@ -15,10 +15,10 @@ let revenueComponent = {
     });
 
     function getRevenue () {
-      revenueService.revenue().then(function(response) {
+      revenueService.revenue().then(function successCallback(response) {
         //First function handles success
         vm.totalRevenue = response.data.totalRevenue;
-      }, function(response) {
+      }, function errorCallback(response) {
              //Second function handles error
         vm.totalRevenue = 'REVENUE UNKNOWN';
       });

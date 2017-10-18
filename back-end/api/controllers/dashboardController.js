@@ -3,7 +3,7 @@ dashboard = mongoose.model('Helicopters');
 //history array of each helicopter [earning, data of rent (unix in seconds), rent time, company name]
 exports.Revenue = function(req, res) {
   let totalRevenue = 0;
-  let revenueLast60Min = 0;
+  let revenueLastHourPerMin = 0;
   let revenue = {};
   let currentTime = Math.floor(Date.now()/1000)
   dashboard.find({}, function(err, dashboard) {
@@ -11,11 +11,12 @@ exports.Revenue = function(req, res) {
       helicopter.history.forEach(function(usageHistoryEntry){
         totalRevenue += parseInt(usageHistoryEntry[0]);
         if ((parseInt(usageHistoryEntry[1]) + 3600) >= currentTime ){
-          revenueLast60Min += parseInt(usageHistoryEntry[0]);
+          revenueLastHourPerMin += parseInt(usageHistoryEntry[0]);
         }
       })
     })
-    revenue = {totalRevenue, revenueLast60Min};
+    revenueLastHourPerMin = revenueLastHourPerMin / 60;
+    revenue = {totalRevenue, revenueLastHourPerMin};
     if (err)
       res.send(err);
     res.json(revenue);

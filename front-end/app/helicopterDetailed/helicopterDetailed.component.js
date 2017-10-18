@@ -30,6 +30,7 @@ let helicopterDetailedComponent = {
     vm.getOneRevenue = getOneRevenue;
     vm.createGraph = createGraph;
     vm.getReloadedData = getReloadedData;
+    vm.stopScroll = stopScroll;
 
     //get helicopter data;
     vm.getHelicopterDetails();
@@ -79,6 +80,7 @@ let helicopterDetailedComponent = {
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
         vm.stopRentingProcess();
         vm.getHelicopterDetails();
+        vm.createGraph();
         reloadService.reloadRevenue();
       }, function errorCallback(response) {
         console.log(response)
@@ -127,6 +129,9 @@ let helicopterDetailedComponent = {
           title: {
             text: 'Helicopter usage through time'
           },
+          legend: {
+            enabled: false
+          },
           xAxis: {
             type: 'datetime'
           },
@@ -172,7 +177,9 @@ let helicopterDetailedComponent = {
         console.log(response);
       });
     }
-
+    function stopScroll (event) {
+      event.preventDefault();
+    }
     function getReloadedData () {
       vm.createGraph ();
       vm.getOneRevenue ();
