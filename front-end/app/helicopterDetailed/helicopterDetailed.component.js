@@ -94,6 +94,7 @@ let helicopterDetailedComponent = {
     // function that retires the helicopter
     function retireHelicopter () {
       helicopterDetailedService.helicopterRetire(vm.id).then(function successCallback(response) {
+        vm.data.retired = true
         console.log(response);
       }, function errorCallback(response) {
         console.log(response)
