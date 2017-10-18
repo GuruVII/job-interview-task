@@ -24,7 +24,7 @@ npm, mongoDB
 
 ## 3) Accessing the webpage
 	Frontend part of the page can be accessed on localhost:9000
-	Backend part can be accessed on localhost:3000/your-route
+	Backend part can be accessed on localhost:3001/your-route
 
 ## 4) DEMO
 [Link](https://helicopters.front-end.guru/)

@@ -1,7 +1,19 @@
 <div class="dashboard">
-Currently rented Helicopters: {{dashboard.currentlyRentedHelicopters}}<br>
-Revenue in the last 60 minutes: {{dashboard.avgRevenuePerMinute | currency:"€"}}<br>
-Most rented helicopter is: {{dashboard.mostRentedHelicopter}}
+    <div>
+        <h5>
+            Currently rented Helicopters: <span class="avoid-wrap">{{dashboard.currentlyRentedHelicopters}}<span>
+        </h5>
+    </div>
+    <div>
+        <h5>
+            Revenue in the last 60 minutes: <span class="avoid-wrap">{{dashboard.avgRevenuePerMinute | currency:"€"}}<span>
+        </h5>
+    </div>
+    <div>
+        <h5>
+        Most rented helicopter is: <span class="avoid-wrap">{{dashboard.mostRentedHelicopter}}<span>
+        </h5>
+    </div>
 </div>
 
 

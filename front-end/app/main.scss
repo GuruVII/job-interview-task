@@ -120,6 +120,36 @@ body {
         margin: 15px 5px 10px 5px;
     }
 }
+
+dashboard { 
+    width: 100%;
+    .dashboard {
+        @include flex-box(row wrap);
+        @include align-items(center);
+        @include justify-content(space-between);
+        @media  only screen and (max-width: 1050px) and (min-width: 450px){
+            @include justify-content(center);  
+        }
+        @media (max-width: 600px){
+            margin: 0;
+            border: none;
+            border-bottom: $primary-color 3px solid;
+        }
+        border: $primary-color 3px solid;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+        margin: -2px 5px 0px 5px;
+        h5 { 
+            margin: 10px 20px 10px 20px;
+            @media (max-width: 490px) {
+                font-size: 15px;
+                letter-spacing: 0em;
+            }
+            .avoid-wrap {
+                display:inline-block;
+            }
+        }
+    }
+}
 //HELICOPTER DETAILS
 
 .wrapper-helicopter-details {
