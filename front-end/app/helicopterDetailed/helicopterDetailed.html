@@ -16,21 +16,27 @@
             <ol>
                 <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index">
                     <!--order[0] = revenue, order[1] unix time in seconds, order[2] = duration -->
-                	<span class="order-details order-history-grid">Revenue: {{order[0]}}€</span> 
+                	<span class="order-details order-history-grid">Revenue: {{order[0] | currency:"€" :0}}</span> 
                 	<span class="order-details order-history-grid">Date: {{order[1] * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
                 	<span ng-if="order[2] != -1" class="order-details order-history-grid">Duration: {{order[2]}}s</span>
                 	<span ng-if="order[2] == -1" class="order-details order-history-grid">Flight canceled</span> 
-                    <span class="order-history-grid order-details" ng-if="order[2] != -1"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index)">close</i></span>
+                    <span class="order-history-grid order-details" ng-if="order[2] != -1"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index); helicopterDetailed.stopScroll($event)">close</i></span>
                 </li>
             </ol>
-            <div class="wrapper-detailed">
+            <div class="wrapper-detailed" id="revenue">
                 <h4>Total Revenue: <br> {{helicopterDetailed.totalRevenue}}€</h4>
                 <a class="mdl-button mdl-js-button" ng-click="helicopterDetailed.getEstimateForm = true">Rent Helicopter</a>
+                <a class="mdl-button mdl-js-button" ng-click="helicopterDetailed.retireHelicopter()">Retire Helicopter</a>
             </div>
+            
         </div>
+        <div id="graph"></div>
     </div>
+
+    <!--Renting FORM -->
     <div class="rent-helicopter-background" ng-if="helicopterDetailed.getEstimateForm" ng-click="helicopterDetailed.stopRentingProcess()">
         <div class="rentHelicopterCard" ng-click="helicopterDetailed.childClick($event)">
+            <!-- first card -->
             <div class="mdl-card" ng-if="helicopterDetailed.estimate.total === 0">
                     <div class="mdl-card__supporting-text">
                         <div class="card-top">
@@ -54,6 +60,7 @@
                     </button>
                 </div>
             </div>
+            <!-- second card -->
             <div class="mdl-card" ng-if="helicopterDetailed.estimate.total > 0">
                 <div class="mdl-card__supporting-text">
                     <div class="card-top">
@@ -63,7 +70,7 @@
                     <div class="card-middle">
                             <h5>ESTIMATED TIME: {{helicopterDetailed.rentTime}} Seconds</h5>
                             <h5>ESTIMATED COST: {{helicopterDetailed.estimate.total}}€</h5>
-                        <button class="mdl-button rent-btn mdl-js-button mdl-button--raised" ng-click="helicopterDetailed.rentHelicopter()">
+                        <button class="mdl-button rent-btn mdl-js-button mdl-button--raised" ng-click="helicopterDetailed.rentHelicopter();">
                             Rent Helicopter
                         </button>
                         <button class="mdl-button rent-btn mdl-js-button mdl-button--raised" ng-click="helicopterDetailed.stopRentingProcess()">

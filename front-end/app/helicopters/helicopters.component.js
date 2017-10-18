@@ -8,10 +8,10 @@ let helicoptersComponent = {
     vm.helicopter = [];
     vm.getHelicopters = getHelicopters;
     function getHelicopters () {
-      helicoptersService.helicopter().then(function(response) {
+      helicoptersService.helicopter().then(function successCallback(response) {
           //First function handles success
         vm.helicopter = [ ...response.data ];
-      }, function(response) {
+      }, function errorCallback(response) {
              //Second function handles error
         vm.helicopter = 'An error has occured';
       });
