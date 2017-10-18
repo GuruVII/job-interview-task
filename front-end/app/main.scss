@@ -50,6 +50,45 @@ body {
     border-radius: 50%;
     background-color: white;
 }
+//SHARED
+
+.mdl-card {
+    width: 360px;
+    margin: 10px 10px 25px 10px;
+    @media (max-width: 600px) {
+        width: 310px;
+        margin: 15px 5px 10px 5px;
+    }
+    .mdl-card__title {
+        height: 216px;
+        padding: 0px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        &.retired {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+        .mdl-card__title-text {
+            color: white;
+            background-color: $primary-color;
+            padding: 5px;
+            font-weight: 400;
+        }
+    }
+    .mdl-card__supporting-text {
+        h5 {
+            margin-bottom: 2px;
+            margin-top: 10px;
+        }
+        .retire-button {
+            margin-top: 10px;
+        }
+    }
+}
 
 //HELICOPTER LIST BODY
 .page-title-main{
@@ -80,34 +119,6 @@ body {
     width: 100%;
     @media(max-width: 950px){
         @include justify-content(center);
-    }
-}
-
-.mdl-card {
-    width: 360px;
-    margin: 10px 10px 25px 10px;
-    @media (max-width: 600px) {
-        width: 310px;
-        margin: 15px 5px 10px 5px;
-    }
-    .mdl-card__title {
-        height: 216px;
-        padding: 0px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center; 
-        .mdl-card__title-text {
-            color: white;
-            background-color: $primary-color;
-            padding: 5px;
-            font-weight: 400;
-        }
-    }
-    .mdl-card__supporting-text {
-        h5 {
-            margin-bottom: 2px;
-            margin-top: 10px;
-        }
     }
 }
 
@@ -173,13 +184,19 @@ dashboard {
             }
 
             .mdl-card__title {
-                background-size: contain;
+                display: block;
                 height: 450px;
                 @media(max-width: 950px){
                     height: 300px;
                 }
                 @media(max-width: 520px){
                     height: 216px;
+                }
+                .retired-tag {
+                    background-color: white;
+                    color: $primary-color;
+                    padding: 5px;
+                    font-weight: 500;
                 }
             }
             .mdl-card__actions {
@@ -237,6 +254,11 @@ dashboard {
             .mdl-button {
                 background-color: $primary-color;
                 color: white;
+                &:disabled {
+                    color: rgba(0,0,0, 0.26);
+                    cursor: default;
+                    background-color: transparent;
+                }
             }
         }
         #graph {

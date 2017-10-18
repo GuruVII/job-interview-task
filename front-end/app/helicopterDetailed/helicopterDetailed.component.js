@@ -10,6 +10,7 @@ let helicopterDetailedComponent = {
   controller: function($stateParams, helicopterDetailedService, reloadService, $interval) {
     const vm = this;
     vm.getEstimateForm = false;
+    vm.getRetireConformation = false;
     vm.id = $stateParams.id;
     vm.totalRevenue = 0;
     vm.data = {};
@@ -26,7 +27,7 @@ let helicopterDetailedComponent = {
     vm.getEstimate = getEstimate;
     vm.childClick = childClick;
     vm.checkIfEmpty = checkIfEmpty;
-    vm.stopRentingProcess = stopRentingProcess;
+    vm.endRentingOrRetiringProcess = endRentingOrRetiringProcess;
     vm.getOneRevenue = getOneRevenue;
     vm.createGraph = createGraph;
     vm.getReloadedData = getReloadedData;
@@ -37,11 +38,12 @@ let helicopterDetailedComponent = {
     //get graph
     vm.createGraph();
 
-    function stopRentingProcess() {
+    function endRentingOrRetiringProcess() {
       vm.rentTime = null;
       vm.name = '';
       vm.estimate.total = 0;
       vm.getEstimateForm = false;
+      vm.getRetireConformation = false;
       vm.isEmpty = true;
     }
     //workaround due to problems with validation
@@ -78,7 +80,7 @@ let helicopterDetailedComponent = {
     function rentHelicopter () {
       let data = `${vm.estimate.total}//${Math.floor(Date.now() / 1000)}//${vm.rentTime}//${vm.name}`
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
-        vm.stopRentingProcess();
+        vm.endRentingOrRetiringProcess();
         vm.getHelicopterDetails();
         vm.createGraph();
         reloadService.reloadRevenue();
@@ -90,7 +92,6 @@ let helicopterDetailedComponent = {
     function retireHelicopter () {
       helicopterDetailedService.helicopterRetire(vm.id).then(function successCallback(response) {
         console.log(response);
-        console.log(`helicopter ${vm.id} has retired`)
       }, function errorCallback(response) {
         console.log(response)
       });
