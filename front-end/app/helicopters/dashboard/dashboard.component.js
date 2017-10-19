@@ -105,17 +105,12 @@ let dashboardComponent = {
               }
             }
           },
-          responsive: {
-            rules: [ {
-              condition: {
-                maxWidth: 1500,
-              },
-            } ]
-          },
           lang: {
             Refresh: 'Refresh'
           },
         });
+        //workaround due to problems in chrome
+        document.querySelectorAll('.highcharts-container')[0].style.width = document.getElementById('dashboard-graph').style.width
       }, function errorCallback(response) {
         console.log(response);
       });
