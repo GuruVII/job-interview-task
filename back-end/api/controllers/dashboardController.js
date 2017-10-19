@@ -75,6 +75,7 @@ exports.numberOfFlowHelicoptersLast3H = function(req, res) {
   let duration;
   let date
   let threeHoursAgo = Math.floor(Date.now()/1000) - 10800;
+  let currentTime = Math.floor(Date.now()/1000)
 
   dashboard.find({history: { $elemMatch: { duration: {$gte: 1 }, end: { $gte: threeHoursAgo } }}}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
@@ -94,6 +95,10 @@ exports.numberOfFlowHelicoptersLast3H = function(req, res) {
             }
             for (let i = 0; i < duration; i++) {
               date = start + i;
+              //to stop when you reach current time
+              if (date >  currentTime) {
+                break
+              }
               if (dataSet[date] == undefined) {
                 dataSet[date] = 1;
               } else {
@@ -103,9 +108,10 @@ exports.numberOfFlowHelicoptersLast3H = function(req, res) {
           }
         }
       })
-    }) 
+    })
+    //turn the object into an array or array, with each subarray containing object property name and value 
     dataSetArray = Object.keys(dataSet).map(key => {
-      return [parseInt(key), dataSet[key]]
+      return [parseInt(key*1000), dataSet[key]]
     })
     if (err)
       res.send(err);

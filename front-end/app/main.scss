@@ -159,6 +159,14 @@ dashboard {
                 display:inline-block;
             }
         }
+        #dashboard-graph{
+            height: 200px;
+            width: 98%;
+            max-width: 1450px;
+        }
+        .highcharts-container {
+            max-width: 1476
+        }
     }
 }
 //HELICOPTER DETAILS
