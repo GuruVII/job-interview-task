@@ -56,13 +56,19 @@ let helicopterDetailedComponent = {
       }
     }
     function checkIfYouCanRent () {
-      let lastEntry = vm.data.history[vm.data.history.length - 1].end
-      let currentTime = Math.floor(Date.now() / 1000);
-      if (currentTime < lastEntry) {
-        alert(`Sorry, the helicopter is currently in use, it will be avaiable in ${lastEntry - currentTime} seconds.`)
-      } else {
+      if (vm.data.history.length === 0) {
         vm.getEstimateForm = true;
+      } else {
+        let lastEntry = vm.data.history[vm.data.history.length - 1].end
+        let currentTime = Math.floor(Date.now() / 1000);
+        if (currentTime < lastEntry) {
+          alert(`Sorry, the helicopter is currently in use, it will be avaiable in ${lastEntry - currentTime} seconds.`)
+        } else {
+          vm.getEstimateForm = true;
+        }
       }
+
+
     }
     //functions gets estimate, by first checking the total duration and then deciding which cacluation to take
     function getEstimate() {

@@ -48,7 +48,7 @@ exports.mostRented = function(req, res) {
   let mostRented = "";
   let mostRentedAmount = 0;
   let rentedAmount;
-  dashboard.find({history: { $elemMatch: { duration: {$gt: 1 }}}}, function(err, dashboard) {
+  dashboard.find({history: { $elemMatch: { duration: {$gt: 0 }}}}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       rentedAmount = 0;
       helicopter.history.forEach(function(usageHistoryEntry) {
@@ -64,5 +64,51 @@ exports.mostRented = function(req, res) {
     if (err)
       res.send(err);
     res.json(mostRented);
+  });
+};
+
+exports.numberOfFlowHelicoptersLast3H = function(req, res) {
+  let dataSet = {};
+  let dataSetArray = []
+  let start;
+  let end;
+  let duration;
+  let date
+  let threeHoursAgo = Math.floor(Date.now()/1000) - 10800;
+
+  dashboard.find({history: { $elemMatch: { duration: {$gte: 1 }, end: { $gte: threeHoursAgo } }}}, function(err, dashboard) {
+    dashboard.forEach(function(helicopter) {
+      helicopter.history.forEach(function(historyEntry){
+        //check, if the entry is cancled
+        if (historyEntry.duration != -1) {
+          end =  historyEntry.end;
+          //check if the flighted ended less than three hours ago
+          if (threeHoursAgo < end) {
+            //check if it started less than three hours ago
+              if (threeHoursAgo > historyEntry.start){
+              start = threeHoursAgo;
+              duration = end - start;
+            } else {
+              start = historyEntry.start;
+              duration = historyEntry.duration;
+            }
+            for (let i = 0; i < duration; i++) {
+              date = start + i;
+              if (dataSet[date] == undefined) {
+                dataSet[date] = 1;
+              } else {
+                dataSet[date] += 1;
+              }
+            }
+          }
+        }
+      })
+    }) 
+    dataSetArray = Object.keys(dataSet).map(key => {
+      return [parseInt(key), dataSet[key]]
+    })
+    if (err)
+      res.send(err);
+    res.json(dataSetArray);
   });
 };

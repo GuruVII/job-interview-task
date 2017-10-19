@@ -73,20 +73,20 @@ exports.getGraphData = function(req, res) {
   let timeStamp;
   let date;
   helicopter.findById(req.params.helicopterId, function(err, helicopter) {
-    helicopter.history.forEach(function(usageHistoryEntry) {
-      timeStamp = usageHistoryEntry.start;
+    helicopter.history.forEach(function(historyEntry) {
+      timeStamp = historyEntry.start;
 
       date = GetDateFromTimestamp(timeStamp + '000');
       //creates an object of arrays
-      if (usageHistoryEntry.duration != -1) {
+      if (historyEntry.duration != -1) {
         if (graphData[date] == undefined) {
           graphData[date] = []
         }
         graphData[date][0] = (timeStamp - (timeStamp % (60 * 60 * 24))) * 1000
         if (graphData[date][1] == undefined) {
-          graphData[date][1] = parseInt(usageHistoryEntry.duration)
+          graphData[date][1] = parseInt(historyEntry.duration)
         } else {
-          graphData[date][1]+= parseInt(usageHistoryEntry.duration)
+          graphData[date][1]+= parseInt(historyEntry.duration)
         }
       }
     })
