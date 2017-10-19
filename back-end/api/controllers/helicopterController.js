@@ -40,7 +40,7 @@ exports.cancelHelicopter = function(req, res) {
 
 exports.rentHelicopter = function(req, res) {
   //the input is changed into an array
-  let item = req.body.history.split("//")
+  let item = req.body.history;
   //this pushes the new value on top of the existing one
   helicopter.findOneAndUpdate({_id: req.params.helicopterId}, {$push: {history: item}}, {new: true}, function(err, helicopter) {
     if (err)
@@ -73,20 +73,20 @@ exports.getGraphData = function(req, res) {
   let timeStamp;
   let date;
   helicopter.findById(req.params.helicopterId, function(err, helicopter) {
-    helicopter.history.forEach(function(usageHistoryEntry) {
-      timeStamp = usageHistoryEntry[1];
+    helicopter.history.forEach(function(historyEntry) {
+      timeStamp = historyEntry.start;
 
       date = GetDateFromTimestamp(timeStamp + '000');
       //creates an object of arrays
-      if (usageHistoryEntry[2] != -1) {
+      if (historyEntry.duration != -1) {
         if (graphData[date] == undefined) {
           graphData[date] = []
         }
         graphData[date][0] = (timeStamp - (timeStamp % (60 * 60 * 24))) * 1000
         if (graphData[date][1] == undefined) {
-          graphData[date][1] = parseInt(usageHistoryEntry[2])
+          graphData[date][1] = parseInt(historyEntry.duration)
         } else {
-          graphData[date][1]+= parseInt(usageHistoryEntry[2])
+          graphData[date][1]+= parseInt(historyEntry.duration)
         }
       }
     })

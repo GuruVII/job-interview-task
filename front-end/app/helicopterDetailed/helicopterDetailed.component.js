@@ -10,6 +10,7 @@ let helicopterDetailedComponent = {
   controller: function($stateParams, helicopterDetailedService, reloadService, $interval) {
     const vm = this;
     vm.getEstimateForm = false;
+    vm.getRetireConformation = false;
     vm.id = $stateParams.id;
     vm.totalRevenue = 0;
     vm.data = {};
@@ -26,31 +27,48 @@ let helicopterDetailedComponent = {
     vm.getEstimate = getEstimate;
     vm.childClick = childClick;
     vm.checkIfEmpty = checkIfEmpty;
-    vm.stopRentingProcess = stopRentingProcess;
+    vm.endRentingOrRetiringProcess = endRentingOrRetiringProcess;
     vm.getOneRevenue = getOneRevenue;
     vm.createGraph = createGraph;
     vm.getReloadedData = getReloadedData;
     vm.stopScroll = stopScroll;
+    vm.checkIfYouCanRent = checkIfYouCanRent;
 
     //get helicopter data;
     vm.getHelicopterDetails();
     //get graph
-    vm.createGraph();
+    vm.createGraph ();
 
-    function stopRentingProcess() {
+    function endRentingOrRetiringProcess() {
       vm.rentTime = null;
       vm.name = '';
       vm.estimate.total = 0;
       vm.getEstimateForm = false;
+      vm.getRetireConformation = false;
       vm.isEmpty = true;
     }
     //workaround due to problems with validation
-    function checkIfEmpty() {
+    function checkIfEmpty () {
       if (document.getElementById('rentTime').classList.contains('ng-empty')) {
         vm.isEmpty = true;
       } else {
         vm.isEmpty = false;
       }
+    }
+    function checkIfYouCanRent () {
+      if (vm.data.history.length === 0) {
+        vm.getEstimateForm = true;
+      } else {
+        let lastEntry = vm.data.history[vm.data.history.length - 1].end
+        let currentTime = Math.floor(Date.now() / 1000);
+        if (currentTime < lastEntry) {
+          alert(`Sorry, the helicopter is currently in use, it will be avaiable in ${lastEntry - currentTime} seconds.`)
+        } else {
+          vm.getEstimateForm = true;
+        }
+      }
+
+
     }
     //functions gets estimate, by first checking the total duration and then deciding which cacluation to take
     function getEstimate() {
@@ -71,14 +89,17 @@ let helicopterDetailedComponent = {
     function getOneRevenue () {
       vm.totalRevenue = 0;
       vm.data.history.forEach(function(currentValue) {
-        vm.totalRevenue += parseInt(currentValue[0])
+        vm.totalRevenue += parseInt(currentValue.revenue)
       });
     }
     //function that sends the $http.put reuqest to rent the helicopter
     function rentHelicopter () {
-      let data = `${vm.estimate.total}//${Math.floor(Date.now() / 1000)}//${vm.rentTime}//${vm.name}`
+      let start = Math.floor(Date.now() / 1000);
+      let duration = parseInt(vm.rentTime);
+      let end = start + duration;
+      let data = { companyName: vm.name, duration: duration, start: start, end: end, revenue: vm.estimate.total }
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
-        vm.stopRentingProcess();
+        vm.endRentingOrRetiringProcess();
         vm.getHelicopterDetails();
         vm.createGraph();
         reloadService.reloadRevenue();
@@ -89,8 +110,8 @@ let helicopterDetailedComponent = {
     // function that retires the helicopter
     function retireHelicopter () {
       helicopterDetailedService.helicopterRetire(vm.id).then(function successCallback(response) {
+        vm.data.retired = true
         console.log(response);
-        console.log(`helicopter ${vm.id} has retired`)
       }, function errorCallback(response) {
         console.log(response)
       });
@@ -99,8 +120,9 @@ let helicopterDetailedComponent = {
     // function that allows of to cancel helicopter rentals
     function cancelHelicopter(index) {
       //sets the revenue from flight to 500, and sets status to -1, which the browser translates into the word canceled
-      vm.data.history[index][0] = 500;
-      vm.data.history[index][2] = -1;
+      vm.data.history[index].revenue = 500;
+      vm.data.history[index].duration = -1;
+      vm.data.history[index].end = -1;
       //mongoose documentation states it is impossible to update an array inside an array, so we are just going to overwrite it
       helicopterDetailedService.helicopterCancel(vm.id, vm.data.history).then(function successCallback(response) {
         reloadService.reloadRevenue();

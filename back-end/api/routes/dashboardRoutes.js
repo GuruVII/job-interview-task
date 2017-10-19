@@ -10,8 +10,9 @@ module.exports = function(app) {
 
   app.route('/dashboard/currently-rented')
     .get(dashboard.numberOfCurrentlyRented)
-   app.route('/dashboard/most-rented')
-    .get(dashboard.mostRented)
-
+  app.route('/dashboard/most-rented')
+   	.get(dashboard.mostRented)
+   app.route('/dashboard/flown-helis-3h')
+   	.get(dashboard.numberOfFlowHelicoptersLast3H)	
 
 };

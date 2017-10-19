@@ -8,6 +8,9 @@ function dashboardService($http) {
     },
     revenueLastHourPerMin: () => {
       return $http.get('http://localhost:3001/dashboard/revenue')
+    },
+    numberOfHelicoptersFlownLast3h: () => {
+      return $http.get('http://localhost:3001/dashboard/flown-helis-3h')
     }
   }
 }

@@ -50,6 +50,45 @@ body {
     border-radius: 50%;
     background-color: white;
 }
+//SHARED
+
+.mdl-card {
+    width: 360px;
+    margin: 10px 10px 25px 10px;
+    @media (max-width: 600px) {
+        width: 310px;
+        margin: 15px 5px 10px 5px;
+    }
+    .mdl-card__title {
+        height: 216px;
+        padding: 0px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        &.retired {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+        .mdl-card__title-text {
+            color: white;
+            background-color: $primary-color;
+            padding: 5px;
+            font-weight: 400;
+        }
+    }
+    .mdl-card__supporting-text {
+        h5 {
+            margin-bottom: 2px;
+            margin-top: 10px;
+        }
+        .retire-button {
+            margin-top: 10px;
+        }
+    }
+}
 
 //HELICOPTER LIST BODY
 .page-title-main{
@@ -83,34 +122,6 @@ body {
     }
 }
 
-.mdl-card {
-    width: 360px;
-    margin: 10px 10px 25px 10px;
-    @media (max-width: 600px) {
-        width: 310px;
-        margin: 15px 5px 10px 5px;
-    }
-    .mdl-card__title {
-        height: 216px;
-        padding: 0px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center; 
-        .mdl-card__title-text {
-            color: white;
-            background-color: $primary-color;
-            padding: 5px;
-            font-weight: 400;
-        }
-    }
-    .mdl-card__supporting-text {
-        h5 {
-            margin-bottom: 2px;
-            margin-top: 10px;
-        }
-    }
-}
-
 .position-card {
     width: 360px;
     margin: 10px 10px 25px 10px;
@@ -118,6 +129,43 @@ body {
     @media (max-width: 600px) {
         width: 310px;
         margin: 15px 5px 10px 5px;
+    }
+}
+
+dashboard { 
+    width: 100%;
+    .dashboard {
+        @include flex-box(row wrap);
+        @include align-items(center);
+        @include justify-content(space-between);
+        @media  only screen and (max-width: 1050px) and (min-width: 450px){
+            @include justify-content(center);  
+        }
+        @media (max-width: 600px){
+            margin: 0;
+            border: none;
+            border-bottom: $primary-color 3px solid;
+        }
+        border: $primary-color 3px solid;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+        margin: -2px 5px 0px 5px;
+        h5 { 
+            margin: 10px 20px 10px 20px;
+            @media (max-width: 490px) {
+                font-size: 15px;
+                letter-spacing: 0em;
+            }
+            .avoid-wrap {
+                display:inline-block;
+            }
+        }
+        #dashboard-graph{
+            height: 200px;
+            width: 98%;
+        }
+        .highcharts-container {
+            max-width: 1476
+        }
     }
 }
 //HELICOPTER DETAILS
@@ -143,13 +191,19 @@ body {
             }
 
             .mdl-card__title {
-                background-size: contain;
+                display: block;
                 height: 450px;
                 @media(max-width: 950px){
                     height: 300px;
                 }
                 @media(max-width: 520px){
                     height: 216px;
+                }
+                .retired-tag {
+                    background-color: white;
+                    color: $primary-color;
+                    padding: 5px;
+                    font-weight: 500;
                 }
             }
             .mdl-card__actions {
@@ -207,6 +261,11 @@ body {
             .mdl-button {
                 background-color: $primary-color;
                 color: white;
+                &:disabled {
+                    color: rgba(0,0,0, 0.26);
+                    cursor: default;
+                    background-color: transparent;
+                }
             }
         }
         #graph {
