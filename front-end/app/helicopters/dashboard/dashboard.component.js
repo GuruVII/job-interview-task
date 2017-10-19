@@ -120,9 +120,9 @@ let dashboardComponent = {
       vm.numberOfCurrentlyRentedHelicopters();
       vm.revenueLastHourPerMin();
       vm.getMostRentedHelicopter()
-      vm.createGraph();
     }
 
+    vm.createGraph();
     //reloads data every 10 seconds
     $interval(function () {
       vm.startDashboard()
