@@ -26,7 +26,7 @@ exports.Revenue = function(req, res) {
 exports.numberOfCurrentlyRented = function(req, res) {
   let currentTime = Math.floor(Date.now()/1000)
   let currentlyRented = 0;
-  dashboard.find({}, function(err, dashboard) {
+  dashboard.find({ history: { $elemMatch: { end: {$gte: currentTime }}} }, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       let helicopterHistoryLength = helicopter.history.length
       //newest one if last, so we search array from last to first.
@@ -48,7 +48,7 @@ exports.mostRented = function(req, res) {
   let mostRented = "";
   let mostRentedAmount = 0;
   let rentedAmount;
-  dashboard.find({}, function(err, dashboard) {
+  dashboard.find({history: { $elemMatch: { duration: {$gt: 1 }}}}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       rentedAmount = 0;
       helicopter.history.forEach(function(usageHistoryEntry) {
