@@ -29,7 +29,7 @@ let helicopterDetailedComponent = {
     vm.checkIfEmpty = checkIfEmpty;
     vm.endRentingOrRetiringProcess = endRentingOrRetiringProcess;
     vm.getOneRevenue = getOneRevenue;
-    vm.createGraph = createGraph;
+    //vm.createGraph = createGraph;
     vm.getReloadedData = getReloadedData;
     vm.stopScroll = stopScroll;
     vm.checkIfYouCanRent = checkIfYouCanRent;
@@ -37,7 +37,7 @@ let helicopterDetailedComponent = {
     //get helicopter data;
     vm.getHelicopterDetails();
     //get graph
-    vm.createGraph ();
+    //vm.createGraph ();
 
     function endRentingOrRetiringProcess() {
       vm.rentTime = null;
@@ -101,7 +101,7 @@ let helicopterDetailedComponent = {
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
         vm.endRentingOrRetiringProcess();
         vm.getHelicopterDetails();
-        vm.createGraph();
+        //vm.createGraph();
         reloadService.reloadRevenue();
       }, function errorCallback(response) {
         console.log(response)
@@ -144,7 +144,7 @@ let helicopterDetailedComponent = {
       });
     }
 
-    function createGraph () {
+    /*function createGraph () {
       helicopterDetailedService.getGraphData(vm.id).then(function successCallback(response) {
         vm.graphData = [ ...response.data ];
         Highcharts.chart('graph', {
@@ -198,12 +198,12 @@ let helicopterDetailedComponent = {
       }, function errorCallback(response) {
         console.log(response);
       });
-    }
+    }*/
     function stopScroll (event) {
       event.preventDefault();
     }
     function getReloadedData () {
-      vm.createGraph ();
+      //vm.createGraph ();
       vm.getOneRevenue ();
     }
 

@@ -1,6 +1,3 @@
-var GetDateFromTimestamp = require('../mixins/GetDateFromTimestamp');
-var sortArrayofArrays = require('../mixins/sortArrayofArrays');
-
 const mongoose = require('mongoose'),
 helicopter = mongoose.model('Helicopters');
 
@@ -75,7 +72,10 @@ exports.getGraphData = function(req, res) {
   helicopter.findById(req.params.helicopterId, function(err, helicopter) {
     helicopter.history.forEach(function(historyEntry) {
       timeStamp = historyEntry.start;
-
+      function GetDateFromTimestamp (stamp) {
+        let fullDate = new Date(parseInt(stamp))
+      return `${fullDate.getFullYear()}-${fullDate.getMonth()+1}-${fullDate.getDate()} GMT`
+      } 
       date = GetDateFromTimestamp(timeStamp + '000');
       //creates an object of arrays
       if (historyEntry.duration != -1) {
@@ -92,16 +92,23 @@ exports.getGraphData = function(req, res) {
     })
     //turns the object of arrays into an array of arrays
     graphDataArray = Object.keys(graphData).map(key => {
-      return graphData[key];
-    })
-
+        return graphData[key];
+      })
+    function sortArrayOfArrays (a, b) {
+      if (a[0] === b[0]) {
+          return 0;
+    }
+      else {
+          return (a[0] < b[0]) ? -1 : 1;
+      }
+    }
     //sorts the array of arrays, by array[0]
-    graphDataArray.sort(sortArrayofArrays);
+    graphDataArray.sort(sortArrayOfArrays);
     let arrayLength = graphDataArray.length;
     let dayInMS = 86400000
     //adds values for every missing day
     for (let i = 0; i < arrayLength - 1; i++){
-      if ((graphDataArray[i][0] + dayInMS) != graphDataArray[i+1][0]) {
+      if (((graphDataArray[i][0] + dayInMS) != graphDataArray[i+1][0]) && ((graphDataArray[i][0] + dayInMS) < graphDataArray[i+1][0])) {
         graphDataArray.splice(i+1, 0, [graphDataArray[i][0] + dayInMS, 0])
         arrayLength ++
       }
