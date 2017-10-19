@@ -32,11 +32,12 @@ let helicopterDetailedComponent = {
     vm.createGraph = createGraph;
     vm.getReloadedData = getReloadedData;
     vm.stopScroll = stopScroll;
+    vm.checkIfYouCanRent = checkIfYouCanRent;
 
     //get helicopter data;
     vm.getHelicopterDetails();
     //get graph
-    vm.createGraph();
+    vm.createGraph ();
 
     function endRentingOrRetiringProcess() {
       vm.rentTime = null;
@@ -47,11 +48,20 @@ let helicopterDetailedComponent = {
       vm.isEmpty = true;
     }
     //workaround due to problems with validation
-    function checkIfEmpty() {
+    function checkIfEmpty () {
       if (document.getElementById('rentTime').classList.contains('ng-empty')) {
         vm.isEmpty = true;
       } else {
         vm.isEmpty = false;
+      }
+    }
+    function checkIfYouCanRent () {
+      let lastEntry = vm.data.history[vm.data.history.length - 1].end
+      let currentTime = Math.floor(Date.now() / 1000);
+      if (currentTime < lastEntry) {
+        alert(`Sorry, the helicopter is currently in use, it will be avaiable in ${lastEntry - currentTime} seconds.`)
+      } else {
+        vm.getEstimateForm = true;
       }
     }
     //functions gets estimate, by first checking the total duration and then deciding which cacluation to take
