@@ -27,7 +27,7 @@ npm, mongoDB
 	Backend part can be accessed on localhost:3001/your-route
 
 ## 4) DEMO
-[Link](https://helicopters.front-end.guru/) (currently has an old version)
+[Link](https://helicopters.front-end.guru/) (currently not working)
 
 ### Boilerplate sources
 [Backend](https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd)
