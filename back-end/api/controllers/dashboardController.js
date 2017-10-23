@@ -33,7 +33,7 @@ exports.numberOfCurrentlyRented = function(req, res) {
     dashboard.forEach(function(helicopter) {
       let helicopterHistoryLength = helicopter.history.length
       //newest one if last, so we search array from last to first.
-      for (let i = helicopterHistoryLength - 1; i > 0; i--){
+      for (let i = helicopterHistoryLength - 1; i >= 0; i--){
         if ((parseInt(helicopter.history[i].start) + parseInt(helicopter.history[i].duration)) > currentTime){
           currentlyRented ++
         } else {

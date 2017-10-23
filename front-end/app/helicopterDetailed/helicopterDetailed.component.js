@@ -102,7 +102,7 @@ let helicopterDetailedComponent = {
       helicopterDetailedService.helicopterRent(vm.id, data).then(function successCallback(response) {
         vm.endRentingOrRetiringProcess();
         vm.getHelicopterDetails();
-        //vm.createGraph();
+        vm.createGraph();
         reloadService.reloadRevenue();
       }, function errorCallback(response) {
         console.log(response)
