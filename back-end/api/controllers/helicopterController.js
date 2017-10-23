@@ -72,21 +72,23 @@ exports.getGraphData = function(req, res) {
   helicopter.findById(req.params.helicopterId, function(err, helicopter) {
     helicopter.history.forEach(function(historyEntry) {
       timeStamp = historyEntry.start;
-      function GetDateFromTimestamp (stamp) {
-        let fullDate = new Date(parseInt(stamp))
-      return `${fullDate.getFullYear()}-${fullDate.getMonth()+1}-${fullDate.getDate()} GMT`
-      } 
-      date = GetDateFromTimestamp(timeStamp + '000');
-      //creates an object of arrays
-      if (historyEntry.duration != -1) {
-        if (graphData[date] == undefined) {
-          graphData[date] = []
-        }
-        graphData[date][0] = (timeStamp - (timeStamp % (60 * 60 * 24))) * 1000
-        if (graphData[date][1] == undefined) {
-          graphData[date][1] = parseInt(historyEntry.duration)
-        } else {
-          graphData[date][1]+= parseInt(historyEntry.duration)
+      if (timeStamp != undefined) {
+        function GetDateFromTimestamp (stamp) {
+          let fullDate = new Date(parseInt(stamp))
+        return `${fullDate.getFullYear()}-${fullDate.getMonth()+1}-${fullDate.getDate()} GMT`
+        } 
+        date = GetDateFromTimestamp(timeStamp + '000');
+        //creates an object of arrays
+        if (historyEntry.duration != -1) {
+          if (graphData[date] == undefined) {
+            graphData[date] = []
+          }
+          graphData[date][0] = (timeStamp - (timeStamp % (60 * 60 * 24))) * 1000
+          if (graphData[date][1] == undefined) {
+            graphData[date][1] = parseInt(historyEntry.duration)
+          } else {
+            graphData[date][1]+= parseInt(historyEntry.duration)
+          }
         }
       }
     })
