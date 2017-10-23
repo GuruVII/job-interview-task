@@ -184,6 +184,7 @@ let helicopterDetailedComponent = {
                 enabled: false
               },
               refreshButton: {
+                y: 10,
                 _titleKey: 'Refresh',
                 onclick: function () {
                   vm.createGraph();
