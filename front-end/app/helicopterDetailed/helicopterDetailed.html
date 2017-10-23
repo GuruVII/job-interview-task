@@ -18,7 +18,7 @@
             <ol>
                 <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index" ng-if="!!order.duration">
                 	<span class="order-details order-history-grid">Revenue: {{order.revenue | currency:"€" :0}}</span> 
-                	<span class="order-details order-history-grid">Date: {{order.start * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
+                	<span class="order-details order-history-grid">Date: {{order.start * 1000 | date:'dd.MM.yyyy HH:mm:ss':'UTC'}}</span> 
                 	<span ng-if="order.duration != -1" class="order-details order-history-grid">Duration: {{order.duration}}s</span>
                 	<span ng-if="order.duration == -1" class="order-details order-history-grid">Flight canceled</span> 
                     <span class="order-history-grid order-details" ng-if="order.duration != -1 && !helicopterDetailed.data.retired"><i class="material-icons" ng-click="helicopterDetailed.cancelHelicopter($index); helicopterDetailed.stopScroll($event)">close</i></span>
