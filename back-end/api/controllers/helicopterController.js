@@ -110,7 +110,7 @@ exports.getGraphData = function(req, res) {
     let dayInMS = 86400000
     //adds values for every missing day
     for (let i = 0; i < arrayLength - 1; i++){
-      if (((graphDataArray[i][0] + dayInMS) != graphDataArray[i+1][0]) && ((graphDataArray[i][0] + dayInMS) < graphDataArray[i+1][0])) {
+      if ((graphDataArray[i][0] + dayInMS) < graphDataArray[i+1][0]) {
         graphDataArray.splice(i+1, 0, [graphDataArray[i][0] + dayInMS, 0])
         arrayLength ++
       }
