@@ -9,6 +9,10 @@ exports.Revenue = function(req, res) {
   dashboard.find({}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       helicopter.history.forEach(function(usageHistoryEntry){
+        if (usageHistoryEntry.revenue == undefined)
+        {
+          usageHistoryEntry.revenue = 0;
+        }
         totalRevenue += parseInt(usageHistoryEntry.revenue);
         if ((parseInt(usageHistoryEntry.start) + 3600) >= currentTime ){
           revenueLastHourPerMin += parseInt(usageHistoryEntry.revenue);
@@ -26,7 +30,7 @@ exports.Revenue = function(req, res) {
 exports.numberOfCurrentlyRented = function(req, res) {
   let currentTime = Math.floor(Date.now()/1000)
   let currentlyRented = 0;
-  dashboard.find({}, function(err, dashboard) {
+  dashboard.find({history: { $elemMatch: { end: {$gte: currentTime }}}}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       let helicopterHistoryLength = helicopter.history.length
       //newest one if last, so we search array from last to first.
@@ -48,7 +52,7 @@ exports.mostRented = function(req, res) {
   let mostRented = "";
   let mostRentedAmount = 0;
   let rentedAmount;
-  dashboard.find({}, function(err, dashboard) {
+  dashboard.find({history: { $elemMatch: { duration: {$gt: 0 }}}}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       rentedAmount = 0;
       helicopter.history.forEach(function(usageHistoryEntry) {
@@ -77,7 +81,7 @@ exports.numberOfFlowHelicoptersLast3H = function(req, res) {
   let threeHoursAgo = Math.floor(Date.now()/1000) - 10800;
   let currentTime = Math.floor(Date.now()/1000)
 
-  dashboard.find({}, function(err, dashboard) {
+  dashboard.find({history: { $elemMatch: { duration: {$gte: 1 }, end: { $gte: threeHoursAgo }}}}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       helicopter.history.forEach(function(historyEntry){
         //check, if the entry is cancled

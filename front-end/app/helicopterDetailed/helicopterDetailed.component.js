@@ -7,7 +7,7 @@ require('highcharts/modules/exporting')(Highcharts);
 let helicopterDetailedComponent = {
   template: helicopterDetailedHtml,
   controllerAs: 'helicopterDetailed',
-  controller: function($stateParams, helicopterDetailedService, reloadService, $interval) {
+  controller: function($stateParams, helicopterDetailedService, reloadService, $interval, $window) {
     const vm = this;
     vm.getEstimateForm = false;
     vm.getRetireConformation = false;
@@ -29,7 +29,7 @@ let helicopterDetailedComponent = {
     vm.checkIfEmpty = checkIfEmpty;
     vm.endRentingOrRetiringProcess = endRentingOrRetiringProcess;
     vm.getOneRevenue = getOneRevenue;
-    //vm.createGraph = createGraph;
+    vm.createGraph = createGraph;
     vm.getReloadedData = getReloadedData;
     vm.stopScroll = stopScroll;
     vm.checkIfYouCanRent = checkIfYouCanRent;
@@ -37,7 +37,7 @@ let helicopterDetailedComponent = {
     //get helicopter data;
     vm.getHelicopterDetails();
     //get graph
-    //vm.createGraph ();
+    vm.createGraph ();
 
     function endRentingOrRetiringProcess() {
       vm.rentTime = null;
@@ -144,10 +144,14 @@ let helicopterDetailedComponent = {
       });
     }
 
-    /*function createGraph () {
+    function createGraph () {
       helicopterDetailedService.getGraphData(vm.id).then(function successCallback(response) {
-        vm.graphData = [ ...response.data ];
+        let graphData = [ ...response.data ];
         Highcharts.chart('graph', {
+          chart: {
+            type: 'line',
+            height: 400,
+          },
           title: {
             text: 'Helicopter usage through time'
           },
@@ -163,12 +167,15 @@ let helicopterDetailedComponent = {
           yAxis: {
             title: {
               text: 'seconds'
-            }
+            },
+            minRange: 100,
+            min: 0,
+            tickInterval: 200,
           },
           series: [ {
             name: 'Rented for',
             color: '#702963',
-            data: vm.graphData
+            data: graphData
           } ],
           exporting: {
             buttons: {
@@ -184,26 +191,22 @@ let helicopterDetailedComponent = {
               }
             }
           },
-          responsive: {
-            rules: [ {
-              condition: {
-                maxWidth: 500,
-              },
-            } ]
-          },
           lang: {
             Refresh: 'Refresh'
-          }
+          },
         });
+        //workaround for graph overflowing in chrome
+        let resizeEvent = new Event('resize');
+        $window.dispatchEvent(resizeEvent);
       }, function errorCallback(response) {
         console.log(response);
       });
-    }*/
+    }
     function stopScroll (event) {
       event.preventDefault();
     }
     function getReloadedData () {
-      //vm.createGraph ();
+      vm.createGraph ();
       vm.getOneRevenue ();
     }
 
