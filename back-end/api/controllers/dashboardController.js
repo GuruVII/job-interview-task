@@ -9,7 +9,7 @@ exports.Revenue = function(req, res) {
   dashboard.find({}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       helicopter.history.forEach(function(usageHistoryEntry){
-        if (usageHistoryEntry.revenue == undefined) {
+        if (!usageHistoryEntry.revenue) {
           usageHistoryEntry.revenue = 0;
         }
         totalRevenue += parseInt(usageHistoryEntry.revenue);
@@ -102,7 +102,7 @@ exports.numberOfFlowHelicoptersLast3H = function(req, res) {
               if (date >  currentTime) {
                 break
               }
-              if (dataSet[date] == undefined) {
+              if (!dataSet[date]) {
                 dataSet[date] = 1;
               } else {
                 dataSet[date] += 1;

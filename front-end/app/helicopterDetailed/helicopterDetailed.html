@@ -16,7 +16,7 @@
             <h4>Usage History</h4>
             <p ng-if="helicopterDetailed.data.history.length == 0">Helicopter is yet to be rented</p>
             <ol>
-                <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index">
+                <li class="order-history" ng-repeat="order in helicopterDetailed.data.history track by $index" ng-if="!!order.duration">
                 	<span class="order-details order-history-grid">Revenue: {{order.revenue | currency:"€" :0}}</span> 
                 	<span class="order-details order-history-grid">Date: {{order.start * 1000 | date:'dd.MM.yyyy HH:mm:ss'}}</span> 
                 	<span ng-if="order.duration != -1" class="order-details order-history-grid">Duration: {{order.duration}}s</span>

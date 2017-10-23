@@ -87,7 +87,7 @@ let helicopterDetailedComponent = {
     function getOneRevenue () {
       vm.totalRevenue = 0;
       vm.data.history.forEach(function(currentValue) {
-        if (currentValue.revenue == null) {
+        if (!currentValue.revenue) {
           currentValue.revenue = 0;
         }
         vm.totalRevenue += parseInt(currentValue.revenue)

@@ -72,7 +72,7 @@ exports.getGraphData = function(req, res) {
   helicopter.findById(req.params.helicopterId, function(err, helicopter) {
     helicopter.history.forEach(function(historyEntry) {
       timeStamp = historyEntry.start;
-      if (timeStamp != undefined) {
+      if (!!timeStamp) {
         function GetDateFromTimestamp (stamp) {
           let fullDate = new Date(parseInt(stamp))
         return `${fullDate.getFullYear()}-${fullDate.getMonth()+1}-${fullDate.getDate()} GMT`
@@ -80,11 +80,11 @@ exports.getGraphData = function(req, res) {
         date = GetDateFromTimestamp(timeStamp + '000');
         //creates an object of arrays
         if (historyEntry.duration != -1) {
-          if (graphData[date] == undefined) {
+          if (!graphData[date]) {
             graphData[date] = []
           }
           graphData[date][0] = (timeStamp - (timeStamp % (60 * 60 * 24))) * 1000
-          if (graphData[date][1] == undefined) {
+          if (!graphData[date][1]) {
             graphData[date][1] = parseInt(historyEntry.duration)
           } else {
             graphData[date][1]+= parseInt(historyEntry.duration)
