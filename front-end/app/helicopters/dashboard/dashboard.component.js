@@ -6,7 +6,7 @@ require('highcharts/modules/exporting')(Highcharts)
 let dashboardComponent = {
   template: dashboardHtml,
   controllerAs: 'dashboard',
-  controller: function(dashboardService, reloadService, $interval, $scope) {
+  controller: function(dashboardService, reloadService, $interval, $scope, $window) {
     const vm = this;
     vm.currentlyRentedHelicopters = 0;
     vm.avgRevenuePerMinute = 0;
@@ -51,10 +51,12 @@ let dashboardComponent = {
 
     function createGraph () {
       dashboardService.numberOfHelicoptersFlownLast3h().then(function successCallback(response) {
-        vm.graphData = [ ...response.data ];
+        let threeHoursInMS = 10800000
+        let timestamp = Math.floor(Date.now() / 1000) * 1000;
+        let graphData = [ ...response.data ];
         Highcharts.chart('dashboard-graph', {
           chart: {
-            type: 'line',
+            type: 'column',
             height: 200,
           },
           title: {
@@ -64,7 +66,9 @@ let dashboardComponent = {
             enabled: false
           },
           xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            min: timestamp - threeHoursInMS,
+            max: timestamp + 60000
           },
           tooltip: {
             pointFormat: 'number of helicopters: {point.y}',
@@ -72,11 +76,14 @@ let dashboardComponent = {
           },
           yAxis: {
             title: {
-              text: 'helicopters used'
-            }
+              text: 'helicopters used',
+            },
+            minRange: 3,
+            min: 0,
+            tickInterval: 1,
           },
           series: [ {
-            data: vm.graphData,
+            data: graphData,
             name: 'Number of helicopters flown in the last 3h',
             color: '#702963',
             lineWidth: 0,
@@ -110,7 +117,8 @@ let dashboardComponent = {
           },
         });
         //workaround due to problems in chrome
-        document.querySelectorAll('.highcharts-container')[0].style.width = document.getElementById('dashboard-graph').style.width
+        let resizeEvent = new Event('resize');
+        $window.dispatchEvent(resizeEvent);
       }, function errorCallback(response) {
         console.log(response);
       });
