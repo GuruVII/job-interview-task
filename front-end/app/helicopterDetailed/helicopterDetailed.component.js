@@ -67,8 +67,6 @@ let helicopterDetailedComponent = {
           vm.getEstimateForm = true;
         }
       }
-
-
     }
     //functions gets estimate, by first checking the total duration and then deciding which cacluation to take
     function getEstimate() {

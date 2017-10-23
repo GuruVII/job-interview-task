@@ -9,12 +9,11 @@ exports.Revenue = function(req, res) {
   dashboard.find({}, function(err, dashboard) {
     dashboard.forEach(function(helicopter) {
       helicopter.history.forEach(function(usageHistoryEntry){
-        if (usageHistoryEntry.revenue == undefined)
-        {
+        if (usageHistoryEntry.revenue == undefined) {
           usageHistoryEntry.revenue = 0;
         }
         totalRevenue += parseInt(usageHistoryEntry.revenue);
-        if ((parseInt(usageHistoryEntry.start) + 3600) >= currentTime ){
+        if ((parseInt(usageHistoryEntry.start) + 3600) >= currentTime ) {
           revenueLastHourPerMin += parseInt(usageHistoryEntry.revenue);
         }
       })
